@@ -44,12 +44,23 @@ h1 {
   box-shadow: none !important;
 }
 
-/* .bs{
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  margin-top :20px !important;
-  border-radius: 5px !important;
-  padding: 20px !important;
-} */
+.cancelBtn {
+  padding: 6px 15px;
+  font-size: 16px;
+  border: 2px solid transparent;
+  background-color: #ff0000;
+  color: #ffffff;
+  border-radius: 10px !important;
+  border-color: #ff0000;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.cancelBtn:hover {
+  color: #ff0000;
+  border-color: #ff0000;
+  background-color: #ffffff;
+}
+
 
 .smallimg {
   height: 200px;
@@ -97,6 +108,10 @@ h2 {
   padding: 10px;
   font-weight: bold !important;
   text-align: center;
+}
+
+p {
+  font-size: 16px !important;
 }
 
 .dropdown-toggle {

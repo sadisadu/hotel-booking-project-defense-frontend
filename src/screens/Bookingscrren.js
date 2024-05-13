@@ -81,13 +81,13 @@ function Bookingscrren() {
 
     try {
       setLoading(true)
-      await axios.post("http://localhost:7700/api/bookings/bookroom", bookingDetails);
+      await axios.post("http://localhost:7700/api/profile/bookroom", bookingDetails);
       setLoading(false)
       Swal.fire({
         icon: "success",
         title: "Congratulations !!",
         text: "Your room Booked Successfully !!",
-      }).then(result => window.location.href = "/bookings")
+      }).then(result => window.location.href = "/profile")
 
     } catch (error) {
       setLoading(false)
