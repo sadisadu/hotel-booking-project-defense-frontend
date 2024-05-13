@@ -24,9 +24,15 @@ function Bookingscrren() {
   const totaldays = moment.duration(Todate.diff(Fromdate)).asDays() + 1
   const totalamount = totaldays * room?.rentperday
 
+  const user = JSON.parse(localStorage.getItem("currentUser"))
 
 
   useEffect(() => {
+
+    if (!user) {
+      window.location.href = "/login"
+    }
+
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -45,27 +51,6 @@ function Bookingscrren() {
   }, [roomid]);
 
 
-  // async function bookRoom() {
-
-  //   const bookingDetails = {
-  //     room,
-  //     userid: JSON.parse(localStorage.getItem('currentUser'))._id,
-  //     fromdate,
-  //     todate,
-  //     totalamount,
-  //     totaldays,
-
-  //   }
-
-  //   try {
-  //     //  app.use('/api/booking' , bookingsRoute)
-  //     const result = await axios.post("http://localhost:7700/api/booking/bookroom", bookingDetails);
-
-  //   } catch (error) {
-  //     console.log("error from booking screen", error)
-  //   }
-  // }
-
   // onToken Function 
   async function onToken(token) {
     // console.log(token);
@@ -81,7 +66,7 @@ function Bookingscrren() {
 
     try {
       setLoading(true)
-      await axios.post("http://localhost:7700/api/profile/bookroom", bookingDetails);
+      await axios.post("http://localhost:7700/api/bookings/bookroom", bookingDetails);
       setLoading(false)
       Swal.fire({
         icon: "success",

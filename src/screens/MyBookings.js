@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import Loader from '../components/Loader'
-
+import { Tag, Divider } from 'antd'
 function MyBookings({ data }) {
 
   const userid = data._id
@@ -71,7 +71,7 @@ function MyBookings({ data }) {
                       (<b className='pl-2' style={{ color: "red" }}>CANCELLED</b>)}
                   </p>
                   <div className='text-right'>
-                    <button className='cancelBtn' onClick={() => { handleCancelBooking(booking._id, booking.roomid) }}>Cancel Booking</button>
+                    {booking?.status === "booked" && (<button className='cancelBtn' onClick={() => { handleCancelBooking(booking._id, booking.roomid) }}>Cancel Booking</button>)}
                   </div>
                 </div>
               ))}
