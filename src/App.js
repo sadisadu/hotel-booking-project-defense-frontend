@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/Navbar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; // Corrected import statement
@@ -13,10 +12,10 @@ function App() {
       <Navbar />
       <BrowserRouter>
         <Routes>
-          
+
           <Route path="/" element={<Homescreen />} />
           <Route path="/home" element={<Homescreen />} />
-          <Route path="/book/:roomid/:fromdate/:todate" element={<Bookingscrren />}/>
+          <Route path="/book/:roomid/:fromdate/:todate" element={<Bookingscrren />} />
           <Route path="/register" element={<Registerscreen />} />
           <Route path="/login" element={<Loginscreen />} />
         </Routes>

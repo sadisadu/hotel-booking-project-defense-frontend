@@ -7,6 +7,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import StripeCheckout from 'react-stripe-checkout';
 
 import moment from "moment";
+import { message } from 'antd';
+import Swal from 'sweetalert2';
 
 function Bookingscrren() {
   const [loading, setLoading] = useState(true);
@@ -14,27 +16,23 @@ function Bookingscrren() {
   const [room, setRoom] = useState();
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
-  const { roomid ,fromdate,todate} = useParams();
+  const { roomid, fromdate, todate } = useParams();
 
   // const roomid =match.params.roomid
-  const Fromdate =moment(fromdate,'DD-MM-YYYY')
-  const Todate =moment(todate,'DD-MM-YYYY')
+  const Fromdate = moment(fromdate, 'DD-MM-YYYY')
+  const Todate = moment(todate, 'DD-MM-YYYY')
+  const totaldays = moment.duration(Todate.diff(Fromdate)).asDays() + 1
+  const totalamount = totaldays * room?.rentperday
 
-  const totaldays =moment.duration(Todate.diff(Fromdate)).asDays()+1
-  const totalamount=totaldays*room?.rentperday 
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-
         const response = await axios.post("http://localhost:7700/api/rooms/getroombyid", { roomid: roomid });
-        
-
         console.log(response.data);
         setRoom(response.data);
-        
-
         setLoading(false);
       } catch (error) {
         setError(true);
@@ -46,55 +44,62 @@ function Bookingscrren() {
     fetchData();
   }, [roomid]);
 
-  const handleFromDateChange = (date) => {
-    setFromDate(date);
-  };
 
-  const handleToDateChange = (date) => {
-    setToDate(date);
-  };
+  // async function bookRoom() {
 
-    async function bookRoom(){
+  //   const bookingDetails = {
+  //     room,
+  //     userid: JSON.parse(localStorage.getItem('currentUser'))._id,
+  //     fromdate,
+  //     todate,
+  //     totalamount,
+  //     totaldays,
 
-      const bookingDetails={
-        room,
-        userid:JSON.parse(localStorage.getItem('currentUser'))._id,
-        fromdate,
-        todate,
-        totalamount,
-        totaldays,
-        
-      }
+  //   }
 
-      try {
-            //  app.use('/api/booking' , bookingsRoute)
-        const result =await axios.post("http://localhost:7700/api/booking/bookroom",bookingDetails);
+  //   try {
+  //     //  app.use('/api/booking' , bookingsRoute)
+  //     const result = await axios.post("http://localhost:7700/api/booking/bookroom", bookingDetails);
 
-      }catch (error){
-console.log("error from booking screen",error)
-      }
+  //   } catch (error) {
+  //     console.log("error from booking screen", error)
+  //   }
+  // }
+
+  // onToken Function 
+  async function onToken(token) {
+    // console.log(token);
+    const bookingDetails = {
+      room,
+      userid: JSON.parse(localStorage.getItem("currentUser"))?._id,
+      Fromdate,
+      Todate,
+      totalamount,
+      totaldays,
+      token
     }
 
-   async function onToken(token){
-      console.log(token);
-      const bookingDetails={
-        room,
-        userid: JSON.parse(localStorage.getItem("currentUser"))._id,
-        fromdate,
-        todate,
-        totalamount,
-        totaldays,
-        token
-      }
-
-      try {
-        // aita backend ar codeaikhane hoibo na 
-            //  app.use('/api/booking' , bookingsRoute)
-        const result =await axios.post("http://localhost:7700/api/booking/bookroom",{bookingDetails});
-      }catch (error){
-
-      }
+    try {
+      setLoading(true)
+      const result = await axios.post("http://localhost:7700/api/bookings/bookroom", bookingDetails);
+      setLoading(false)
+      Swal.fire({
+        icon: "success",
+        title: "Congratulations !!",
+        text: "Your room Booked Successfully !!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.log("I am reesult", result)
+    } catch (error) {
+      setLoading(false)
+      Swal.fire({
+        title: "Something went wrong!! Try Again !",
+        text: `Error from bookingScrrens ${error}`,
+        icon: "error",
+      });
     }
+  }
 
 
   return (
@@ -115,7 +120,7 @@ console.log("error from booking screen",error)
                 <h1>Booking Details</h1>
                 <hr />
                 <b>
-                  <p>Name : {JSON.parse(localStorage.getItem('currentUser')).name}</p>
+                  <p>Name : {JSON.parse(localStorage.getItem('currentUser'))?.name}</p>
                   <p>From Date :  {fromdate}</p>
                   <p>To Date : {todate} </p>
                   <p>Max Count : {room?.maxcount}</p>
@@ -131,16 +136,14 @@ console.log("error from booking screen",error)
                 </b>
               </div>
               <div style={{ float: 'right' }}>
-                {/* <button className='btn btn-primary'onClick={bookRoom}> Pay Now</button> */}
-
                 <StripeCheckout
-                amount={totalamount * 100}
-        token={onToken}
-        currency='Taka'
-        stripeKey="pk_test_51PFdpZRoGuoCEYvahMEyOCb02v4Jy0MjSroZeNzDO2G9rLFsxIMytGh7Gyaq7MI064tJZax6MMoZ5aI48FEqXez600nfLe0dYw"
-      />
-      <button className="btn btn-primary"onClick={bookRoom}> Pay Now{" "}</button>
-
+                  amount={totalamount * 100}
+                  token={onToken}
+                  currency='BDT'
+                  stripeKey="pk_test_51PFdpZRoGuoCEYvahMEyOCb02v4Jy0MjSroZeNzDO2G9rLFsxIMytGh7Gyaq7MI064tJZax6MMoZ5aI48FEqXez600nfLe0dYw"
+                >
+                  <button className="btn btn-primary"> Pay Now</button>
+                </StripeCheckout>
               </div>
             </div>
           </div>

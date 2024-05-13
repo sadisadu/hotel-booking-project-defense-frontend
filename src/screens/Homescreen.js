@@ -20,8 +20,6 @@ function Homescreen ()
     const fetchData = async () => {
       try {
         setloading(true)
-    
-
         const response = await axios.get("http://localhost:7700/api/rooms/getallrooms")
         console.log("i am response",response.data)
         setrooms(response.data)

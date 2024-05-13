@@ -12,19 +12,19 @@ code {
     monospace;
 }
 
-.navbar{
+.navbar {
   background-color: black !important;
 }
 
-.nav-link{
+.nav-link {
   color: white !important;
 }
 
-.navbar-brand{
+.navbar-brand {
   color: white !important;
 }
 
-.navbar-nav{
+.navbar-nav {
   margin-left: auto !important;
 }
 
@@ -34,10 +34,11 @@ code {
   border: radius 5px !important  ;
 } */
 
-h1{
+h1 {
   font-size: 20px !important;
 }
-.btn{
+
+.btn {
   background-color: black !important;
   color: white !important;
   box-shadow: none !important;
@@ -53,7 +54,7 @@ h1{
 .smallimg {
   height: 200px;
   width: 100% !important;
-  
+
   border-radius: 5px !important;
 }
 
@@ -64,21 +65,26 @@ h1{
   padding: 20px !important;
 }
 
-.bigimg{
+.bigimg {
   height: 400px;
+  width: 100%;
+  padding-bottom: 20px;
   border-radius: 5px !important;
 }
-input{
+
+input {
   box-shadow: none !important;
   margin-top: 10px;
   border: 1px solid black !important;
 }
-h2{
+
+h2 {
   font-size: 30px !important;
   padding: 10px;
   font-weight: bold !important;
   text-align: center;
 }
-.dropdown-toggle{
+
+.dropdown-toggle {
   border: 0px solid black !important;
 }
