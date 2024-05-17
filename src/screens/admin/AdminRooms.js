@@ -30,6 +30,48 @@ function AdminRooms() {
   }, [])
 
 
+  const handleEdit = (id) => {
+    // setEditPopup(true);
+  };
+
+  const handleDelete = (id) => {
+    const roomId = id;
+    console.log("I am roomid", roomId)
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        (async () => {
+          try {
+            await axios.delete(
+              `http://localhost:7700/api/rooms/delete/${roomId}`
+            );
+            Swal.fire({
+              title: "Deleted!",
+              text: "Room has been deleted.",
+              icon: "success",
+            });
+            window.location.reload()
+          } catch (err) {
+            Swal.fire({
+              title: "ERROR!",
+              text: `Error from admin all rooms handleDelete ${err}`,
+              icon: "error",
+            });
+          }
+        })();
+      }
+    });
+  };
+
+
 
   return (
     <div className='row'>
@@ -62,10 +104,10 @@ function AdminRooms() {
                         <td>{room?.maxcount}</td>
                         <td>{room?.phonenumber}</td>
                         <td >
-                          <button className='btn-outline-primary  mx-2'>
+                          <button onClick={handleEdit} className='btn-outline-primary  mx-2'>
                             <GrEdit size={20} />
                           </button>
-                          <button className='btn-outline-danger'>
+                          <button onClick={() => { handleDelete(room?._id) }} className='btn-outline-danger'>
                             <MdOutlineDeleteOutline size={22} />
                           </button>
                         </td>
