@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
 
 function AdminEditRoom({ roomData, setEditPopup }) {
-  console.log("popup data", roomData)
+  // console.log("popup data", roomData)
   const [loading, setLoading] = useState(true)
 
   const {
@@ -30,7 +30,7 @@ function AdminEditRoom({ roomData, setEditPopup }) {
       type: data.type === "" ? roomData?.type : data.type,
       imageurls
     }
-    console.log(dataToSent)
+    // console.log(dataToSent)
 
     try {
       setLoading(true)
