@@ -26,7 +26,6 @@ function Navbar() {
                                         <a className="dropdown-item" href="/home">Home</a>
                                         <a className="dropdown-item" href="/bookings">Profile</a>
                                         <a className="dropdown-item" href="#" onClick={logout}>Logout</a>
-                                        {/* <a className="dropdown-item" href="#">Something else here</a> */}
                                     </div>
                                 </div>
                             </>

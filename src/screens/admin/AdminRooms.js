@@ -4,10 +4,14 @@ import Swal from 'sweetalert2';
 import Loader from '../../components/Loader';
 import { GrEdit } from 'react-icons/gr';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { AiFillCloseCircle } from 'react-icons/ai';
+import AdminEditRoom from './AdminEditRoom';
 
 function AdminRooms() {
   const [loading, setLoading] = useState(true)
   const [allRooms, setAllRooms] = useState([])
+  const [editPopup, setEditPopup] = useState(false)
+  const [number, setNumber] = useState(null)
 
   useEffect(() => {
 
@@ -31,7 +35,7 @@ function AdminRooms() {
 
 
   const handleEdit = (id) => {
-    // setEditPopup(true);
+    setEditPopup(true);
   };
 
   const handleDelete = (id) => {
@@ -103,11 +107,14 @@ function AdminRooms() {
                         <td>{room?.rentperday}</td>
                         <td>{room?.maxcount}</td>
                         <td>{room?.phonenumber}</td>
-                        <td >
-                          <button onClick={handleEdit} className='btn-outline-primary  mx-2'>
+                        <td className='flex gap-2'>
+                          <button onClick={() => {
+                            handleEdit(room?._id)
+                            setNumber(index)
+                          }} className="w-[35px] h-[35px] rounded-full border flex justify-center items-center bg-blue-600 hover:bg-white hover:ring-2 hover:ring-blue-600 hover:text-blue-600 duration-300">
                             <GrEdit size={20} />
                           </button>
-                          <button onClick={() => { handleDelete(room?._id) }} className='btn-outline-danger'>
+                          <button onClick={() => { handleDelete(room?._id) }} className="w-[35px] h-[35px] rounded-full border flex justify-center items-center bg-red-600 hover:bg-white hover:ring-2 hover:ring-red-600 hover:text-red-600 duration-300">
                             <MdOutlineDeleteOutline size={22} />
                           </button>
                         </td>
@@ -120,8 +127,28 @@ function AdminRooms() {
           )
         }
       </div>
+      {/* edit pop up */}
+      {
+        editPopup && (
+          <div className="fixed left-0 bg-gray-700/20 z-10 top-0 w-full h-full ">
+            <button
+              onClick={() => setEditPopup(false)}
+              className="text-red-500 absolute z-[1000] top-[200px] right-[500px]">
+              <AiFillCloseCircle size={40} />
+            </button>
+            {editPopup && (
+              <AdminEditRoom
+                roomData={allRooms[number]}
+                setEditPopup={setEditPopup}
+              />
+            )}
+          </div>
+        )
+      }
     </div>
   )
+
 }
+
 
 export default AdminRooms

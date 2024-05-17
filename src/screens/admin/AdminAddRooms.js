@@ -53,8 +53,6 @@ function AdminAddRooms() {
       setLoading(false)
     }
 
-
-
   }
 
 
@@ -84,5 +82,9 @@ function AdminAddRooms() {
     </div>
   )
 }
+
+
+
+
 
 export default AdminAddRooms
