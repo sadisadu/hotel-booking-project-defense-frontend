@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2';
 import Loader from '../../components/Loader';
+import { GrEdit } from 'react-icons/gr';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
 
 function AdminRooms() {
   const [loading, setLoading] = useState(true)
@@ -46,6 +48,7 @@ function AdminRooms() {
                     <th>Rent Per Day</th>
                     <th>Max Count</th>
                     <th>Phone Number</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -58,6 +61,14 @@ function AdminRooms() {
                         <td>{room?.rentperday}</td>
                         <td>{room?.maxcount}</td>
                         <td>{room?.phonenumber}</td>
+                        <td >
+                          <button className='btn-outline-primary  mx-2'>
+                            <GrEdit size={20} />
+                          </button>
+                          <button className='btn-outline-danger'>
+                            <MdOutlineDeleteOutline size={22} />
+                          </button>
+                        </td>
                       </tr>
                     ))
                   }
