@@ -29,6 +29,7 @@ function Registerscreen() {
             showConfirmButton: false,
             timer: 1500,
           });
+          window.location.href = "/login"
           setloading(false);
 
           setname("")

@@ -163,7 +163,7 @@ function AdminRooms() {
       {/* edit pop up */}
       {
         editPopup && (
-          <div className="fixed left-0 bg-gray-700/20 z-10 top-0 w-full h-full ">
+          <div className="fixed left-0 bg-gray-700/80 z-10 top-0 w-full h-full ">
             <button
               onClick={() => setEditPopup(false)}
               className="text-red-500 absolute z-[1000] top-[200px] right-[500px]">

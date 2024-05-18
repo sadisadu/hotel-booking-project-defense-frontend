@@ -8,11 +8,11 @@ import AdminAddRooms from "./AdminAddRooms";
 
 function AdminScreen() {
 
-  // useEffect(() => {
-  //   if (!JSON.parse(localStorage.getItem("currentUser")).isAdmin) {
-  //     window.location.href = "/login"
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (!JSON.parse(localStorage.getItem("currentUser"))?.isAdmin) {
+      window.location.href = "/login"
+    }
+  }, [])
 
   return (
     <div className="m-3 mt-3 bs">

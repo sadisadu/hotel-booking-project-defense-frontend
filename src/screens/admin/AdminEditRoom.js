@@ -61,7 +61,7 @@ function AdminEditRoom({ roomData, setEditPopup }) {
 
   return (
     <div className='w-full h-full flex flex-col justify-center items-center'>
-      <h1 className='text-center text-6xl'>Edit Room</h1>
+      <h1 className='text-center text-6xl text-white'>Edit Room</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="row w-full flex justify-center">
           <div className="col-md-5">

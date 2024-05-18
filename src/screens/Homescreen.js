@@ -103,9 +103,9 @@ function Homescreen() {
 
   return (
 
-    <div className='container'>
+    <div className='container w-full '>
 
-      <div className='row mt-5'>
+      <div className='row mt-5 w-full flex items-end justify-center'>
         {/* filtering by date */}
         <div className='col-md-3'>
           <RangePicker format={'DD-MM-YYYY'} onChange={filterByDate} />
