@@ -137,12 +137,11 @@ function AdminBookings() {
                           <td>{booking?.todate}</td>
                           <td>{booking?.status}</td>
                           <td className='flex gap-2'>
-
-                            <button onClick={() => { handleCancel(booking?._id, booking?.roomid) }} className="w-[35px] h-[35px] rounded-full border flex justify-center  items-center bg-red-600  hover:bg-red-700  duration-300">
+                            {booking?.status === "booked" && (<button onClick={() => { handleCancel(booking?._id, booking?.roomid) }} className="w-[35px] h-[35px] rounded-full border flex justify-center  items-center bg-red-600  hover:bg-red-700  duration-300">
 
                               <RxCross2 size={22} className='hover:text-gray-600 text-white z-10' />
 
-                            </button>
+                            </button>)}
                           </td>
                         </tr>
                       ))
