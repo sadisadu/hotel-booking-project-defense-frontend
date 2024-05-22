@@ -109,7 +109,6 @@ function Homescreen() {
   return (
 
     <div className='container w-full '>
-
       <div className='row mt-5 w-full flex items-end justify-center'>
         {/* filtering by date */}
         <div className='col-md-3'>
@@ -146,7 +145,7 @@ function Homescreen() {
           <h1>Loading...</h1>
         ) : (
           rooms.map((room) => {
-            return <div className="col-md-9">
+            return <div className="col-md-9 mb-10">
               <Room room={room} fromdate={fromdate} todate={todate} />
             </div>;
           })

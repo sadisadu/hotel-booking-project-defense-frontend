@@ -39,7 +39,7 @@ function AdminAddRooms() {
           icon: "success",
           title: "Room Added Successfully"
         }).then(result => {
-          window.location.href = "home"
+          window.location.href = "admin"
           reset()
           setLoading(false)
         })
@@ -65,7 +65,7 @@ function AdminAddRooms() {
             <input className='form-control' {...register("name")} required placeholder='Room name' />
             <input type="text" className='form-control' {...register("rentperday")} required placeholder='Rent Per Day' />
             <input type="text" className='form-control'{...register("maxcount")} required placeholder='Max count' />
-            <input type="text" className='form-control'{...register("description")} required placeholder='Description' />
+            <textarea rows={5} type="text" className=' my-2 ring-[1px] rounded-sm w-full p-3 ring-black'{...register("description")} required placeholder='Description' />
             <input type="text" className='form-control'{...register("phonenumber")} required placeholder='Phone Number' />
           </div>
           <div className="col-md-5">
@@ -74,7 +74,7 @@ function AdminAddRooms() {
             <input type="text" className='form-control'{...register("imgurl2")} required placeholder='Image url 2' />
             <input type="text" className='form-control'{...register("imgurl3")} required placeholder='Image url 3' />
             <div className='text-right'>
-              <button className='btn mt-3' type='submit'>ADD Room</button>
+              <button className='btn mt-3' type='submit'>Add Room</button>
             </div>
           </div>
         </div>
