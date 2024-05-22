@@ -101,6 +101,11 @@ function Homescreen() {
   }
 
 
+  const disabledDate = (current) => {
+    return current && current < moment().startOf('day');
+  };
+
+
   return (
 
     <div className='container w-full '>
@@ -108,7 +113,7 @@ function Homescreen() {
       <div className='row mt-5 w-full flex items-end justify-center'>
         {/* filtering by date */}
         <div className='col-md-3'>
-          <RangePicker format={'DD-MM-YYYY'} onChange={filterByDate} />
+          <RangePicker format={'DD-MM-YYYY'} onChange={filterByDate} disabledDate={disabledDate} />
         </div>
 
         {/* filtering by search text */}

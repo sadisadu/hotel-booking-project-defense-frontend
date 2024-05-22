@@ -122,7 +122,7 @@ function Bookingscrren() {
                 <StripeCheckout
                   amount={totalamount * 100}
                   token={onToken}
-                  currency='BDT'
+                  currency='USD'
                   stripeKey="pk_test_51PFdpZRoGuoCEYvahMEyOCb02v4Jy0MjSroZeNzDO2G9rLFsxIMytGh7Gyaq7MI064tJZax6MMoZ5aI48FEqXez600nfLe0dYw"
                 >
                   <button className="btn btn-primary"> Pay Now</button>
