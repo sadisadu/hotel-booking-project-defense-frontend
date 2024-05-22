@@ -4,10 +4,18 @@ import Swal from 'sweetalert2';
 import Loader from '../../components/Loader';
 import { useReactToPrint } from 'react-to-print';
 import AllBookingsTablePrint from '../../utils/AllBookingsTablePrint';
+import { GrEdit } from 'react-icons/gr';
+import { MdOutlineCancel, MdOutlineDeleteOutline } from 'react-icons/md';
+import { AiFillCloseCircle } from 'react-icons/ai';
+import AdminEditBookings from './AdminEditBookings';
+import { RxCross2 } from "react-icons/rx";
+
 
 function AdminBookings() {
   const [loading, setLoading] = useState(true)
   const [bookings, setBookings] = useState([])
+  const [editPopup, setEditPopup] = useState(false)
+  const [number, setNumber] = useState(null)
 
   const adminBookingsRef = useRef();
   const print = useReactToPrint({
@@ -35,6 +43,44 @@ function AdminBookings() {
     }
     fetchAdminBookings()
   }, [])
+
+
+
+  const handleCancel = (id, roomid) => {
+    const bookingid = id;
+    // console.log("I am bookingid", bookingid)
+    // console.log("I am roomid", roomid)
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, cancel it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        (async () => {
+          try {
+            await axios.post("http://localhost:7700/api/bookings/cancelBooking", { bookingid, roomid })
+            Swal.fire({
+              title: "Booking Cancelled !!!",
+              text: "Booking cancelled Successfully !!",
+              icon: "success",
+            });
+            window.location.reload()
+          } catch (err) {
+            Swal.fire({
+              title: "ERROR!",
+              text: `Error from admin all rooms handleCancel ${err}`,
+              icon: "error",
+            });
+          }
+        })();
+      }
+    });
+  };
 
 
 
@@ -77,6 +123,7 @@ function AdminBookings() {
                       <th>From</th>
                       <th>To</th>
                       <th>Status</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -89,6 +136,14 @@ function AdminBookings() {
                           <td>{booking?.fromdate}</td>
                           <td>{booking?.todate}</td>
                           <td>{booking?.status}</td>
+                          <td className='flex gap-2'>
+
+                            <button onClick={() => { handleCancel(booking?._id, booking?.roomid) }} className="w-[35px] h-[35px] rounded-full border flex justify-center  items-center bg-red-600  hover:bg-red-700  duration-300">
+
+                              <RxCross2 size={22} className='hover:text-gray-600 text-white z-10' />
+
+                            </button>
+                          </td>
                         </tr>
                       ))
                     }
@@ -99,6 +154,24 @@ function AdminBookings() {
           )
         }
       </div>
+      {/* edit pop up */}
+      {
+        editPopup && (
+          <div className="fixed left-0 bg-gray-700/80 z-10 top-0 w-full h-full ">
+            <button
+              onClick={() => setEditPopup(false)}
+              className="text-red-500 absolute z-[1000] top-[200px] right-[500px]">
+              <AiFillCloseCircle size={40} />
+            </button>
+            {editPopup && (
+              <AdminEditBookings
+                bookingsData={bookings[number]}
+                setEditPopup={setEditPopup}
+              />
+            )}
+          </div>
+        )
+      }
     </div >
   )
 }

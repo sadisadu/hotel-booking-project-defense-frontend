@@ -39,7 +39,7 @@ function MyBookings({ data }) {
       Swal.fire({
         icon: "success",
         title: "Booking Cancelled !!",
-        text: "Room cancelled Successfully !!",
+        text: "Booking cancelled Successfully !!",
       }).then(result => window.location.href = "/profile")
     } catch (error) {
       Swal.fire({
