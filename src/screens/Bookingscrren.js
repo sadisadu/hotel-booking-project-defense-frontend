@@ -25,7 +25,7 @@ function Bookingscrren() {
   const totalamount = totaldays * room?.rentperday
 
   const user = JSON.parse(localStorage.getItem("currentUser"))
-
+  console.log("I am user", user)
 
   useEffect(() => {
 
@@ -37,7 +37,7 @@ function Bookingscrren() {
       try {
         setLoading(true);
         const response = await axios.post("http://localhost:7700/api/rooms/getroombyid", { roomid: roomid });
-        console.log(response.data);
+        console.log("room data", response.data);
         setRoom(response.data);
         setLoading(false);
       } catch (error) {
@@ -120,12 +120,17 @@ function Bookingscrren() {
               </div>
               <div style={{ float: 'right' }}>
                 <StripeCheckout
+                  name={`Name: ${user?.name}`}
+                  shippingAddress
+                  billingAddress={true}
+                  zipCode={false}
                   amount={totalamount * 100}
                   token={onToken}
-                  currency='USD'
+                  image={room?.imageurls[0]}
+                  currency='BDT'
                   stripeKey="pk_test_51PFdpZRoGuoCEYvahMEyOCb02v4Jy0MjSroZeNzDO2G9rLFsxIMytGh7Gyaq7MI064tJZax6MMoZ5aI48FEqXez600nfLe0dYw"
                 >
-                  <button className="btn btn-primary"> Pay Now</button>
+                  <button className="btn btn-primary">Pay Now</button>
                 </StripeCheckout>
               </div>
             </div>
