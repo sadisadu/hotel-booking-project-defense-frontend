@@ -60,9 +60,9 @@ function Loginscreen() {
     <div>
       {/* {loading && (<Loader/>)} */}
       <div className="row justify-content-center mt-5">
-        <div className="col-md-5 mt-5">
+        <div className="col-md-5 mt-5 bs">
           {error && (<Error message ='Invalid Credentionals'/>)}
-          <div className='bs'>
+          <div className=''>
             <h2>Login</h2>
             
             <input type="text" className="form-control mb-1" placeholder="email" value={email} onChange={(e)=>{setemail(e.target.value)}} />
@@ -72,6 +72,11 @@ function Loginscreen() {
            
           <button className="btn btn-primary mt-3" onClick={Login}>Login</button>
 
+
+          <div className='text-right'>
+
+          <a href='/register' className='text-black hover:underline  '>Don't have Account?</a>
+          </div>
           </div>
 
         </div>

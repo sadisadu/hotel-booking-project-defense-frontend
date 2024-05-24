@@ -121,7 +121,7 @@ function Bookingscrren() {
               <div style={{ float: 'right' }}>
                 <StripeCheckout
                   name={`Name: ${user?.name}`}
-                  shippingAddress
+                  shippingAddress={false}
                   billingAddress={true}
                   zipCode={false}
                   amount={totalamount * 100}
