@@ -5,6 +5,7 @@ import AdminBookings from "./AdminBookings";
 import AdminRooms from "./AdminRooms";
 import AdminUsers from "./AdminUsers";
 import AdminAddRooms from "./AdminAddRooms";
+import AdminFinance from "./AdminFinance";
 
 function AdminScreen() {
 
@@ -29,6 +30,9 @@ function AdminScreen() {
         </TabPane>
         <TabPane tab="Users" key="4">
           <AdminUsers />
+        </TabPane>
+        <TabPane tab="Finance" key="5">
+          <AdminFinance/>
         </TabPane>
       </Tabs>
     </div>
