@@ -8,7 +8,7 @@ function AdminFinance() {
   const [bookings, setBookings] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
 
-  const adminBookingsRef = useRef();
+  const adminFinanceRef = useRef();
 
   useEffect(() => {
     const fetchAdminBookings = async () => {
@@ -37,14 +37,12 @@ function AdminFinance() {
     setTotalAmount(total);
   };
 
-  const handleGenerateReport = () => {
-    print();
-  };
-
-  const print = useReactToPrint({
-    content: () => adminBookingsRef.current,
-    documentTitle: "AdminAllBookings",
+  const handleGenerateReport = useReactToPrint({
+    content: () => adminFinanceRef.current,
+    documentTitle: "Finance",
   });
+
+ 
 
   return (
     <div className="row">
@@ -59,7 +57,7 @@ function AdminFinance() {
               <h2>Total Amount: BDT {totalAmount}</h2>
             </div>
             {/* Render bookings table */}
-            <div ref={adminBookingsRef}>
+            <div ref={adminFinanceRef}>
               <table className="table table-striped table-border">
                 <thead>
                   <tr>
