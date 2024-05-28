@@ -31,33 +31,47 @@ function MyBookings({ data }) {
     fetchuserBookings()
   }, [])
 
-  const handleCancelBooking = async (bookingid, roomid) => {
-    try {
-      setLoading(true)
-      const result = await axios.post("http://localhost:7700/api/bookings/cancelBooking", { bookingid, roomid })
-      setLoading(false)
-      Swal.fire({
-        icon: "success",
-        title: "Booking Cancelled !!",
-        text: "Booking cancelled Successfully !!",
-      }).then(result => window.location.href = "/profile")
-    } catch (error) {
-      Swal.fire({
-        title: "ERROR!",
-        text: `Error from handlecancelBooking ${error}`,
-        icon: "error",
-      });
-      setLoading(false)
-    }
+  const handleCancelBooking = (bookingid, roomid) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Cancel it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        (async () => {
+          try {
+            await axios.post("http://localhost:7700/api/bookings/cancelBooking", { bookingid, roomid })
+            Swal.fire({
+              title: "Canceled!",
+              text: "Booking has been Canceled.",
+              icon: "success",
+            });
+            window.location.reload()
+          } catch (err) {
+            Swal.fire({
+              title: "ERROR!",
+              text: `Error from handleCancel booking ${err}`,
+              icon: "error",
+            });
+          }
+        })();
+      }
+    });
   }
+
+
 
   return (
     <div>
       <div className="row">
-        <div className="col-md-6">
+        <>
           {loading ? (<Loader />) :
-            (<>
-              {bookings.map((booking) => (
+            (<div className="col-md-6 ">
+              {[...bookings].reverse().map((booking) => (
                 <div className='bs'>
                   <h1>{booking?.room}</h1>
                   <p><b>Booking ID:</b> {booking?._id}</p>
@@ -75,8 +89,8 @@ function MyBookings({ data }) {
                   </div>
                 </div>
               ))}
-            </>)}
-        </div>
+            </div>)}
+        </>
       </div>
     </div>
   )

@@ -63,7 +63,7 @@ function AdminBookings() {
       if (result.isConfirmed) {
         (async () => {
           try {
-            await axios.post("http://localhost:7700/api/bookings/cancelBooking", { bookingid, roomid })
+            await axios.post("http://localhost:7700/api/bookings/admin/cancelBooking", { bookingid, roomid })
             Swal.fire({
               title: "Booking Cancelled !!!",
               text: "Booking cancelled Successfully !!",

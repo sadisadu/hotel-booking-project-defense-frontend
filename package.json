@@ -54,6 +54,7 @@
     "react-spinners": "^0.13.8",
     "react-stripe-checkout": "^2.6.3",
     "react-to-print": "^2.15.1",
+    "react-toastify": "^10.0.5",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.3.0",

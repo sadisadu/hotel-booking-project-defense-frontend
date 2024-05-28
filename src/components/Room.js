@@ -20,7 +20,7 @@ function Room({ room, fromdate, todate }) {
       <div className="col-md-8">
         <h1>{room.name}</h1>
         <b>
-          <p>Max Count : {room?.maxcount}</p>
+          <p>Total Rooms : {room?.totalrooms}</p>
           <p>Phone Number : {room?.phonenumber}</p>
           <p>Place : {room?.type}</p>
           <p>Rent Per Day : {room?.rentperday}</p>
@@ -57,19 +57,19 @@ function Room({ room, fromdate, todate }) {
             })}
           </Carousel>
           <p style={{ whiteSpace: 'pre-wrap' }}>{room?.description}</p>
-          <div style={{padding : 20}}>
-         <h3>Reviews</h3>
+          <div style={{ padding: 20 }}>
+            <h3>Reviews</h3>
             <div>
-      
-           {room?.reviews?.map((review, index) => (
-              <div key={index} className="review">
-                <p><b>{review.customerName}</b>: {review.description}</p>
-                <div style={{ marginBottom: 5 }}></div>
-              </div>
-            ))}
-        
+
+              {room?.reviews?.map((review, index) => (
+                <div key={index} className="review">
+                  <p><b>{review.customerName}</b>: {review.description}</p>
+                  <div style={{ marginBottom: 5 }}></div>
+                </div>
+              ))}
+
             </div>
-         </div>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose} >

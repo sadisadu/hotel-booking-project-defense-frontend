@@ -22,7 +22,7 @@ function AdminAddRooms() {
     const dataToSent = {
       name: data.name,
       rentperday: data.rentperday,
-      maxcount: data.maxcount,
+      totalrooms: data.totalrooms,
       description: data.description,
       phonenumber: data.phonenumber,
       type: data.type,
@@ -64,7 +64,7 @@ function AdminAddRooms() {
           <div className="col-md-5">
             <input className='form-control' {...register("name")} required placeholder='Room name' />
             <input type="text" className='form-control' {...register("rentperday")} required placeholder='Rent Per Day' />
-            <input type="text" className='form-control'{...register("maxcount")} required placeholder='Max count' />
+            <input type="text" className='form-control'{...register("totalrooms")} required placeholder='Total Rooms' />
             <textarea rows={5} type="text" className=' my-2 ring-[1px] rounded-sm w-full p-3 ring-black'{...register("description")} required placeholder='Description' />
             <input type="text" className='form-control'{...register("phonenumber")} required placeholder='Phone Number' />
           </div>

@@ -90,7 +90,7 @@ function Bookingscrren() {
       customerName: reviewName || user?.name
     };
 
-    console.log("review ---:",review, roomid);
+    console.log("review ---:", review, roomid);
 
     try {
       setLoading(true);
@@ -134,7 +134,7 @@ function Bookingscrren() {
                   <p>Name : {JSON.parse(localStorage.getItem('currentUser'))?.name}</p>
                   <p>From Date : {fromdate}</p>
                   <p>To Date : {todate}</p>
-                  <p>Max Count : {room?.maxcount}</p>
+                  <p>Total Rooms : {room?.totalrooms}</p>
                 </b>
               </div>
               <div style={{ textAlign: 'right' }}>
@@ -146,7 +146,7 @@ function Bookingscrren() {
                   <p>Total Amount : {totalamount}</p>
                 </b>
               </div>
-              
+
               <div style={{ float: 'right' }}>
                 <StripeCheckout
                   name={`Name: ${user?.name}`}
@@ -161,28 +161,28 @@ function Bookingscrren() {
                 >
                   <button className="btn btn-primary">Pay Now</button>
                 </StripeCheckout>
-                <div style={{ marginTop : 10, borderRadius: 5, alignItems: 'center', height: 30, width: 90, backgroundColor: 'black', color: 'white', textAlign: 'center' }}>
-                <button onClick={() => setShowReviewModal(true)}>
-                  Review
-                </button>
-              </div>
+                <div style={{ marginTop: 10, borderRadius: 5, alignItems: 'center', height: 30, width: 90, backgroundColor: 'black', color: 'white', textAlign: 'center' }}>
+                  <button onClick={() => setShowReviewModal(true)}>
+                    Review
+                  </button>
+                </div>
               </div>
             </div>
-            
+
           </div>
-         <div style={{padding : 20, }}>
-         <h3>Reviews</h3>
+          <div style={{ padding: 20, }}>
+            <h3>Reviews</h3>
             <div>
-      
-           {room?.reviews?.map((review, index) => (
-              <div key={index} className="review">
-                <p><b>{review.customerName}</b>: {review.description}</p>
-                <div style={{ marginBottom: 5 }}></div>
-              </div>
-            ))}
-        
+
+              {room?.reviews?.map((review, index) => (
+                <div key={index} className="review">
+                  <p><b>{review.customerName}</b>: {review.description}</p>
+                  <div style={{ marginBottom: 5 }}></div>
+                </div>
+              ))}
+
             </div>
-         </div>
+          </div>
         </div>
       )}
       <Modal show={showReviewModal} onHide={() => setShowReviewModal(false)}>

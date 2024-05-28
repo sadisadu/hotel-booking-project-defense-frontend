@@ -24,7 +24,7 @@ function AdminEditBookings({ bookingsData, setEditPopup }) {
       roomId: bookingsData?._id,
       name: data.name === "" ? bookingsData?.name : data.name,
       rentperday: data.rentperday === "" ? bookingsData?.rentperday : data.rentperday,
-      maxcount: data.maxcount === "" ? bookingsData?.maxcount : data.maxcount,
+      totalrooms: data.totalrooms === "" ? bookingsData?.totalrooms : data.totalrooms,
       description: data.description === "" ? bookingsData?.description : data.description,
       phonenumber: data.phonenumber === "" ? bookingsData?.phonenumber : data.phonenumber,
       type: data.type === "" ? bookingsData?.type : data.type,
@@ -67,7 +67,7 @@ function AdminEditBookings({ bookingsData, setEditPopup }) {
           <div className="col-md-5">
             <input className=' w-[300px]  p-3'   {...register("name")} placeholder='Room name' />
             <input type="text" className=' w-[300px] pl-3' {...register("rentperday")} placeholder='Rent Per Day' />
-            <input type="text" className=' w-[300px] pl-3'{...register("maxcount")} placeholder='Max count' />
+            <input type="text" className=' w-[300px] pl-3'{...register("totalrooms")} placeholder='Total Rooms' />
             <input type="text" className=' w-[300px] pl-3'{...register("phonenumber")} placeholder='Phone Number' />
             <textarea id="" className='w-[300px] mt-2.5 ring-[1px] ring-black pl-3'{...register("description")} placeholder='Description' rows={5} ></textarea>
           </div>

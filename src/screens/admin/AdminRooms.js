@@ -124,7 +124,7 @@ function AdminRooms() {
                       <th>Name</th>
                       <th>Type</th>
                       <th>Rent Per Day</th>
-                      <th>Max Count</th>
+                      <th>Total Rooms</th>
                       <th>Phone Number</th>
                       <th></th>
                     </tr>
@@ -137,7 +137,7 @@ function AdminRooms() {
                           <td>{room?.name}</td>
                           <td>{room?.type}</td>
                           <td>{room?.rentperday}</td>
-                          <td>{room?.maxcount}</td>
+                          <td>{room?.totalrooms}</td>
                           <td>{room?.phonenumber}</td>
                           <td className='flex gap-2'>
                             <button onClick={() => {

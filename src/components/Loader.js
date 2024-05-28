@@ -1,23 +1,22 @@
-import React , {useState} from "react"
+import React, { useState } from "react"
 import HashLoader from "react-spinners/HashLoader";
 
 function Loader() {
-    let [loading, setLoading] = useState(true);
-    
-  return (
-   
-    <div style={{margin:'150px'}}>   <div className="sweet-loading text-center">
-    
+  let [loading, setLoading] = useState(true);
 
-    <HashLoader
-      color='#000'
-      loading={loading}
-      css=''
-      size={50}
-      
-    />
-  </div></div>
-   
+  return (
+
+    <div className="flex justify-center items-center w-full h-screen">
+      <div className="sweet-loading ">
+        <HashLoader
+          color='#000'
+          loading={loading}
+          css=''
+          size={50}
+        />
+      </div>
+    </div>
+
 
   )
 }
