@@ -120,9 +120,12 @@ function AdminBookings() {
                       <th>Booking ID</th>
                       <th>User ID</th>
                       <th>Room</th>
+                      <th>Amount</th>
                       <th>From</th>
                       <th>To</th>
                       <th>Status</th>
+                      <th>Cancel</th>
+                      
                       <th></th>
                     </tr>
                   </thead>
@@ -133,6 +136,7 @@ function AdminBookings() {
                           <td>{booking?._id}</td>
                           <td>{booking?.userid}</td>
                           <td>{booking?.room}</td>
+                          <td>{booking.totalamount}</td>
                           <td>{booking?.fromdate}</td>
                           <td>{booking?.todate}</td>
                           <td>{booking?.status}</td>
