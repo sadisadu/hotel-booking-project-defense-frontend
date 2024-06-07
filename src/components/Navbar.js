@@ -13,6 +13,7 @@ function Navbar() {
                 <a href='/home' className='text-3xl text-white'>
                     Booking Hotel
                 </a>
+                
             </div>
             {/* resst of the part */}
             <div className=' h-full '>

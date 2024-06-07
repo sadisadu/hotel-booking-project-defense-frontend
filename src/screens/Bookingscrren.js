@@ -22,10 +22,14 @@ function Bookingscrren() {
   const [reviewDescription, setReviewDescription] = useState('');
   const [reviewName, setReviewName] = useState('');
 
+  const [adultCount, setAdultCount] = useState(0);
+  const [childCount, setChildCount] = useState(0);
+
   const Fromdate = moment(fromdate, 'DD-MM-YYYY');
   const Todate = moment(todate, 'DD-MM-YYYY');
   const totaldays = moment.duration(Todate.diff(Fromdate)).asDays() + 1;
   const totalamount = totaldays * room?.rentperday;
+
 
   const user = JSON.parse(localStorage.getItem("currentUser"));
   console.log("I am user", user);
@@ -53,7 +57,8 @@ function Bookingscrren() {
   }, [roomid]);
 
   // onToken Function
-  async function onToken(token) {
+async function onToken(token) {
+    // console.log(token);
     const bookingDetails = {
       room,
       userid: JSON.parse(localStorage.getItem("currentUser"))?._id,
@@ -61,20 +66,24 @@ function Bookingscrren() {
       Todate,
       totalamount,
       totaldays,
-      token
-    };
+      token,
+      childNumber: childCount,
+      adultNumber: adultCount
+    }
 
     try {
-      setLoading(true);
-      await axios.post("http://localhost:7700/api/bookings/bookroom", bookingDetails);
-      setLoading(false);
+      setLoading(true)
+      const result = await axios.post("http://localhost:7700/api/bookings/bookroom", bookingDetails);
+      console.log("bookingscreen", result)
+      setLoading(false)
       Swal.fire({
         icon: "success",
         title: "Congratulations !!",
         text: "Your room Booked Successfully !!",
-      }).then(result => window.location.href = "/profile");
+      }).then(result => window.location.href = "/profile")
+
     } catch (error) {
-      setLoading(false);
+      setLoading(false)
       Swal.fire({
         title: "Something went wrong!! Try Again !",
         text: `Error from bookingScrrens ${error}`,
@@ -126,6 +135,7 @@ function Bookingscrren() {
               <h1>{room?.name}</h1>
               <img src={room?.imageurls[0]} className='bigimg' alt={room?.name} />
             </div>
+            
             <div className='col-md-6'>
               <div style={{ textAlign: 'right' }}>
                 <h1>Booking Details</h1>
@@ -134,13 +144,51 @@ function Bookingscrren() {
                   <p>Name : {JSON.parse(localStorage.getItem('currentUser'))?.name}</p>
                   <p>From Date : {fromdate}</p>
                   <p>To Date : {todate}</p>
-                  <p>Total Rooms : {room?.totalrooms}</p>
+                  <p>Room Number : {room?.totalrooms}</p>
                 </b>
               </div>
               <div style={{ textAlign: 'right' }}>
                 <b>
                   <h1>Amount</h1>
                   <hr />
+                  {/* adding adult childpart */}
+                  {room?.type.toLowerCase() === "double" || room?.type.toLowerCase() ==="delux" && (<div>
+                    {/* enter adult number */}
+                  <div className='w-full flex flex-col items-end border-b py-3'>
+                    <p>Enter number of Adults: </p>
+                    <p>{adultCount}</p>
+                    <div className='flex gap-1'>
+                      <button onClick={() => {
+                        if (adultCount < 2) {
+                          setAdultCount((prev) => prev + 1)
+                        }
+                      }} className='w-[30px] h-[30px] flex justify-center items-center border border-gray-200 rounded-[6px]'>+</button>
+                      <button onClick={() => {
+                        if (adultCount > 0) {
+                          setAdultCount((prev) => prev - 1)
+                        }
+                      }} className='w-[30px] h-[30px] flex justify-center items-center border border-gray-200 rounded-[6px]'>-</button>
+                    </div>
+                  </div>
+                  {/* enter child number */}
+                  <div className='w-full flex flex-col items-end border-b py-3'>
+                    <p>Enter number of Child: </p>
+                    <p>{childCount}</p>
+                    <div className='flex gap-1'>
+                      <button onClick={() => {
+                        if (childCount < 2) {
+                          setChildCount((prev) => prev + 1)
+                        }
+                      }} className='w-[30px] h-[30px] flex justify-center items-center border border-gray-200 rounded-[6px]'>+</button>
+                      <button onClick={() => {
+                        if (childCount > 0) {
+                          setChildCount((prev) => prev - 1)
+                        }
+                      }} className='w-[30px] h-[30px] flex justify-center items-center border border-gray-200 rounded-[6px]'>-</button>
+                    </div>
+                  </div>
+                  </div>)}
+                  {/*  */}
                   <p>Total days : {totaldays}</p>
                   <p>Rent per day : {room?.rentperday}</p>
                   <p>Total Amount : {totalamount}</p>

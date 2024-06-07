@@ -24,8 +24,11 @@ function App() {
           <Route path="/login" element={<Loginscreen />} />
           <Route path="/profile" element={<ProfileScreen />} />
           <Route path="/admin" element={<AdminScreen />} />
+        
 
         </Routes>
+
+        
       </BrowserRouter>
     </div>
   );

@@ -28,7 +28,8 @@ function AdminEditRoom({ roomData, setEditPopup }) {
       description: data.description === "" ? roomData?.description : data.description,
       phonenumber: data.phonenumber === "" ? roomData?.phonenumber : data.phonenumber,
       type: data.type === "" ? roomData?.type : data.type,
-      imageurls
+      imageurls,
+      location: data.location === "" ? roomData?.location : data.types
     }
     // console.log(dataToSent)
 
@@ -73,6 +74,7 @@ function AdminEditRoom({ roomData, setEditPopup }) {
           </div>
           <div className="col-md-5">
             <input type="text" className=' w-[300px] pl-3'{...register("type")} placeholder='Type' />
+            <input type="text" className=' w-[300px] pl-3'{...register("location")} placeholder='Location' />
             <input type="text" className=' w-[300px] pl-3'{...register("imgurl1")} placeholder='Image url 1' />
             <input type="text" className=' w-[300px] pl-3'{...register("imgurl2")} placeholder='Image url 2' />
             <input type="text" className=' w-[300px] pl-3'{...register("imgurl3")} placeholder='Image url 3' />

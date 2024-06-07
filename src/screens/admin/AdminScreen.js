@@ -6,6 +6,8 @@ import AdminRooms from "./AdminRooms";
 import AdminUsers from "./AdminUsers";
 import AdminAddRooms from "./AdminAddRooms";
 import AdminFinance from "./AdminFinance";
+// import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import AdminRefund from './AdminRefund';
 
 function AdminScreen() {
 
@@ -34,6 +36,9 @@ function AdminScreen() {
         <TabPane tab="Finance" key="5">
           <AdminFinance/>
         </TabPane>
+        {/* <TabPane tab="Refund" key="5">
+          <AdminRefund/>
+        </TabPane> */}
       </Tabs>
     </div>
   );

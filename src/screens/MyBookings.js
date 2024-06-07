@@ -77,6 +77,9 @@ function MyBookings({ data }) {
                   <p><b>Booking ID:</b> {booking?._id}</p>
                   <p><b>CheckIn:</b> {booking?.fromdate}</p>
                   <p><b>Checkout:</b> {booking?.todate}</p>
+                  <p><b>Adult Number:</b> {booking?.adultNumber}</p>
+                  <p><b>Child Number:</b> {booking?.childNumber}</p>
+
                   <p><b>Total Amount:</b> {booking?.totalamount}</p>
                   <p><b>Status:</b>
                     {booking?.status === "booked" ?
@@ -97,3 +100,4 @@ function MyBookings({ data }) {
 }
 
 export default MyBookings
+

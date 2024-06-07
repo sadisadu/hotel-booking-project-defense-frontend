@@ -26,7 +26,8 @@ function AdminAddRooms() {
       description: data.description,
       phonenumber: data.phonenumber,
       type: data.type,
-      imageurls
+      imageurls,
+      location: data.location
     }
     console.log(dataToSent)
 
@@ -70,6 +71,7 @@ function AdminAddRooms() {
           </div>
           <div className="col-md-5">
             <input type="text" className='form-control'{...register("type")} required placeholder='Type' />
+            <input type="text" className='form-control'{...register("location")} required placeholder='Location' />
             <input type="text" className='form-control'{...register("imgurl1")} required placeholder='Image url 1' />
             <input type="text" className='form-control'{...register("imgurl2")} required placeholder='Image url 2' />
             <input type="text" className='form-control'{...register("imgurl3")} required placeholder='Image url 3' />

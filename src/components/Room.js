@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -6,7 +8,7 @@ import Carousel from 'react-bootstrap/Carousel';
 
 
 function Room({ room, fromdate, todate }) {
-  console.log("room", room)
+  // console.log("room", room)
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -20,11 +22,22 @@ function Room({ room, fromdate, todate }) {
       <div className="col-md-8">
         <h1>{room.name}</h1>
         <b>
-          <p>Total Rooms : {room?.totalrooms}</p>
+          <p>Room Number : {room?.totalrooms}</p>
           <p>Phone Number : {room?.phonenumber}</p>
-          <p>Place : {room?.type}</p>
+          <p>Type : {room?.type}</p>
+          <p>Location : {room?.location}</p>
           <p>Rent Per Day : {room?.rentperday}</p>
+        
         </b>
+        <div>
+          <h4>Rating</h4>
+          <i class="fa-solid fa-star" ></i>
+          <i class="fa-solid fa-star" ></i>
+          <i class="fa-solid fa-star" ></i>
+          <i class="fa-solid fa-star" ></i>
+          <i class="fa-solid fa-star" ></i>
+         </div>
+       
         <div style={{ float: "right" }}> {/* Adjust alignment of button */}
 
           {(fromdate && todate) && (
@@ -33,6 +46,7 @@ function Room({ room, fromdate, todate }) {
             </Link>
           )}
 
+          
 
           <button className="btn btn-primary" onClick={handleShow}>view details</button>
         </div>
@@ -57,7 +71,9 @@ function Room({ room, fromdate, todate }) {
             })}
           </Carousel>
           <p style={{ whiteSpace: 'pre-wrap' }}>{room?.description}</p>
-          <div style={{ padding: 20 }}>
+
+          {/* review part  */}
+          <div style={{ padding: 20, }}>
             <h3>Reviews</h3>
             <div>
 

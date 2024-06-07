@@ -19,8 +19,10 @@ function Homescreen() {
   const [duplicaterooms, setduplicaterooms] = useState([])
   const [searchKey, setSearchKey] = useState("")
   const [searchType, setSearchType] = useState("all")
+  const [locationType, setLocationType] = useState("all")
 
   const allRoomTypes = [...new Set(duplicaterooms?.map((item) => item?.type))] //filtering out the duplicate room types
+  const allRoomLocation = [...new Set(duplicaterooms?.map((item) => item?.location))] //filtering out the duplicate room location
 
 
 
@@ -118,21 +120,35 @@ function Homescreen() {
     setrooms(tempRooms)
   }
 
+  function filterByLocation(e) {
+    const value = e.target.value
+
+    console.log("location", value)
+    setLocationType(value)
+    if (value !== "all") {
+      const tempRooms = [...duplicaterooms]?.filter(room => room?.location.toLowerCase() === value?.toLowerCase())
+      console.log("location", tempRooms)
+      setrooms([...tempRooms])
+    }
+    else {
+      const tempRooms = [...duplicaterooms]
+      setrooms(tempRooms)
+    }
+  }
+
   function filterByOption(e) {
     const value = e.target.value
 
     console.log("searchtype", value)
     setSearchType(value)
     if (value !== "all") {
-      const tempRooms = [...duplicaterooms].filter(room => room?.type.toLowerCase() === value.toLowerCase())
-
+      const tempRooms = [...duplicaterooms].filter(room => room?.type.toLowerCase() === value?.toLowerCase())
       setrooms(tempRooms)
     }
     else {
       const tempRooms = [...duplicaterooms]
       setrooms(tempRooms)
     }
-
   }
 
 
@@ -161,12 +177,25 @@ function Homescreen() {
           />
         </div>
 
-        {/* filtering by options */}
+        {/* filtering by location */}
+        <div className='col-md-3'>
+          <select value={locationType} onChange={
+            filterByLocation
+          }>
+            <option value="all">all</option>
+            {
+              allRoomLocation.map((item) => (
+                <option value={item}>{item}</option>
+              ))
+            }
+          </select>
+        </div>
+        {/* filtering by room type */}
         <div className='col-md-3'>
           <select value={searchType} onChange={
             filterByOption
           }>
-            <option value="all">All</option>
+            <option value="all">all</option>
             {
               allRoomTypes.map((item) => (
                 <option value={item}>{item}</option>
@@ -181,19 +210,22 @@ function Homescreen() {
         {loading ? (
           <h1>Loading...</h1>
         ) :
-          searchType === "all" ? ((
+          searchType === "all" || locationType === "all" ? ((
             rooms.map((room) => {
               return <div className="col-md-9 mb-10">
                 <Room room={room} fromdate={fromdate} todate={todate} />
               </div>
             })
           )) : ((
-            rooms.filter((room) => room?.type === searchType).map((room) => {
+            rooms.filter((room) => {
+              return room?.type === searchType && room?.location === locationType
+            }).map((room) => {
               return <div className="col-md-9 mb-10">
                 <Room room={room} fromdate={fromdate} todate={todate} />
               </div>
             })
-          ))
+          )
+          )
         }
       </div>
     </div>

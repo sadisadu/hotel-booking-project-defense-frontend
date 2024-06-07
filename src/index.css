@@ -164,3 +164,9 @@ p {
   border-color: #000000;
   background-color: #ffffff;
 }
+
+
+
+  .fa-star {
+    color: #FFD43B;; /* You can also use a specific hex code like #FFD700 */
+}
