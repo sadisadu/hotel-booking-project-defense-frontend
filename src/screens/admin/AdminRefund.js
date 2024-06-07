@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { calculateRefund } from '../utils/refundCalculator';
-
+// import { calculateRefund } from '../utils/refundCalculator';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import 'antd/dist/reset.css';
 function AdminRefund() {
+
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,22 +30,23 @@ function AdminRefund() {
 
   const handleRefund = async (bookingId) => {
     const booking = bookings.find(b => b._id === bookingId);
-    const refundAmount = calculateRefund(booking);
+    // const refundAmount = calculateRefund(booking);
 
-    if (refundAmount === 0) {
-      Swal.fire({
-        title: "No Refund",
-        text: "No refund available for this booking.",
-        icon: "info",
-      });
-      return;
-    }
+    // if (refundAmount === 0) {
+    //   Swal.fire({
+    //     title: "No Refund",
+    //     text: "No refund available for this booking.",
+    //     icon: "info",
+    //   });
+    //   return;
+    // }
 
     try {
-      await axios.post("http://localhost:7700/api/bookings/refundBooking", { bookingId, refundAmount });
+      await axios.post("http://localhost:7700/api/bookings/refundBooking", { bookingId });
       Swal.fire({
         title: "Success",
-        text: `Refund of BDT ${refundAmount} processed successfully.`,
+        // text: `Refund of BDT ${refundAmount} processed successfully.`,
+        text: `Refund of BDT processed successfully.`,
         icon: "success",
       });
     } catch (error) {
@@ -71,7 +75,7 @@ function AdminRefund() {
                 <th>To date</th>
                 <th>Status info</th>
                 <th>Amount</th>
-                <th>Refund</th>
+                {/* <th>Refund</th> */}
               </tr>
             </thead>
             <tbody>
@@ -84,9 +88,10 @@ function AdminRefund() {
                   <td>{booking.todate}</td>
                   <td>{booking.status}</td>
                   <td>{booking.totalamount}</td>
-                  <td>
-                    <button 
-                      onClick={() => handleRefund(booking._id){
+                  {/* <td>
+                    <button
+                      onClick={() => {
+                        handleRefund(booking._id)
                         toast.success("Refund success", {
                           position: "top-right",
                           autoClose: false,
@@ -98,19 +103,20 @@ function AdminRefund() {
                           theme: "colored",
                           transition: Bounce,
                         })
-                      }} 
+
+                      }}
                       className="btn btn-danger"
                     >
                       Process Refund
                     </button>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>
           </table>
         )}
       </div>
-    </div>
+    </div >
   );
 }
 

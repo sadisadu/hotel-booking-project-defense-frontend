@@ -7,7 +7,8 @@ function AdminFinance() {
   const [loading, setLoading] = useState(true);
   const [bookings, setBookings] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
-  const [selectedDate, setSelectedDate] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [hotelName, setHotelName] = useState('');
 
   const adminFinanceRef = useRef();
@@ -47,18 +48,18 @@ function AdminFinance() {
   });
 
   const handleFilter = async () => {
-    if (!selectedDate || !hotelName) {
+    if (!startDate || !endDate || !hotelName) {
       Swal.fire({
         title: "ERROR!",
-        text: "Please select a date and enter a hotel name",
+        text: "Please select both start and end dates, and enter a hotel name",
         icon: "error",
       });
       return;
     }
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:7700/api/bookings/getBookingsBySpecificDateAndHotel", {
-        params: { date: selectedDate, hotelName },
+      const response = await axios.get("http://localhost:7700/api/bookings/getBookingsByDateRangeAndHotel", {
+        params: { startDate, endDate, hotelName },
       });
       setBookings(response.data);
       calculateTotalAmount(response.data);
@@ -80,9 +81,17 @@ function AdminFinance() {
         <div className="date-filter mb-3">
           <input
             type="date"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
             className="form-control"
+            placeholder="Start Date"
+          />
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className="form-control mt-2"
+            placeholder="End Date"
           />
           <input
             type="text"
@@ -139,6 +148,7 @@ function AdminFinance() {
 }
 
 export default AdminFinance;
+
 
 
 

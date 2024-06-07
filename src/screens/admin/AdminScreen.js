@@ -34,11 +34,11 @@ function AdminScreen() {
           <AdminUsers />
         </TabPane>
         <TabPane tab="Finance" key="5">
-          <AdminFinance/>
+          <AdminFinance />
         </TabPane>
-        {/* <TabPane tab="Refund" key="5">
-          <AdminRefund/>
-        </TabPane> */}
+        <TabPane tab="Refund" key="6">
+          <AdminRefund />
+        </TabPane>
       </Tabs>
     </div>
   );
