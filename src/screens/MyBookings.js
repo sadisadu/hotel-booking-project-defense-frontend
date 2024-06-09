@@ -63,6 +63,39 @@ function MyBookings({ data }) {
     });
   }
 
+  // handleChekout
+  const handleCheckout = (bookingid, roomid) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Chekout!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        (async () => {
+          try {
+            await axios.post("http://localhost:7700/api/bookings/checkout", { bookingid, roomid })
+            Swal.fire({
+              title: "Checkout Successful !!! ",
+              icon: "success",
+            });
+            window.location.reload()
+          } catch (err) {
+            Swal.fire({
+              title: "ERROR!",
+              text: `Error from handleCheckout  ${err}`,
+              icon: "error",
+            });
+          }
+        })();
+      }
+    });
+  }
+
+  // handle refund
   const handleReqRefund = (bookingid, roomid) => {
     Swal.fire({
       title: "Are you sure?",
@@ -102,88 +135,104 @@ function MyBookings({ data }) {
   return (
     <div>
       <div className="row">
-        <>
-          {loading ? (
-            <Loader />
-          ) : (
-            <div className="col-md-6 ">
-              {[...bookings].reverse().map((booking) => (
-                <div className="bs">
-                  <h1>{booking?.room}</h1>
-                  <p>
-                    <b>Booking ID:</b> {booking?._id}
-                  </p>
-                  <p>
-                    <b>CheckIn:</b> {booking?.fromdate}
-                  </p>
-                  <p>
-                    <b>Checkout:</b> {booking?.todate}
-                  </p>
-                  <p>
-                    <b>Total Amount:</b> {booking?.totalamount}
-                  </p>
-                  <p>
-                    <b>Status:</b>
-                    {booking?.status === "booked" ? (
-                      <b className="pl-2" style={{ color: "green" }}>
-                        CONFIRMED
-                      </b>
-                    ) : (
-                      <b className="pl-2" style={{ color: "red" }}>
-                        CANCELLED
-                      </b>
-                    )}
-                  </p>
-                  <div className="text-right">
-                    {booking?.status === "booked" && (
+
+        {loading ? (
+          <Loader />
+        ) : (
+          <div className="col-md-6 ">
+            {[...bookings].reverse().map((booking) => (
+              <div className="bs">
+                <h1>{booking?.room}</h1>
+                <p>
+                  <b>Booking ID:</b> {booking?._id}
+                </p>
+                <p>
+                  <b>CheckIn:</b> {booking?.fromdate}
+                </p>
+                <p>
+                  <b>Checkout:</b> {booking?.todate}
+                </p>
+                <p>
+                  <b>Total Amount:</b> {booking?.totalamount}
+                </p>
+                <p>
+                  <b>Status:</b>
+                  {booking?.status === "booked" ? (
+                    <b className="pl-2" style={{ color: "green" }}>
+                      CONFIRMED
+                    </b>
+                  ) : (
+                    <b className="pl-2 text-red-600 uppercase">
+                      {booking?.status}
+                    </b>
+                  )}
+                </p>
+                {/* cancel booking part */}
+                <div className="text-right">
+                  {booking?.status === "booked" && (
+                    <button
+                      className="cancelBtn"
+                      onClick={() => {
+                        handleCancelBooking(booking._id, booking.roomid);
+                      }}
+                    >
+                      Cancel Booking
+                    </button>
+                  )}
+                </div>
+
+                {/* checkout booking part */}
+                <div className="text-right mt-2">
+                  {booking?.status === "booked" && (
+                    <button
+                      className="bg-sky-600 p-2 rounded-[10px] text-white uppercase"
+                      onClick={() => {
+                        handleCheckout(booking._id, booking.roomid);
+                      }}
+                    >
+                      Checkout
+                    </button>
+                  )}
+                </div>
+                {/* refund part */}
+                <div>
+                  <div className="text-left">
+                    {booking?.status !== "booked" && booking?.status !== "checkout" && booking?.reqRefund === false && booking?.isRefunded === false && (
                       <button
-                        className="cancelBtn"
+                        className="refundBtn"
                         onClick={() => {
-                          handleCancelBooking(booking._id, booking.roomid);
+                          handleReqRefund(booking._id, booking.roomid);
                         }}
                       >
-                        Cancel Booking
+                        Request Refund
                       </button>
                     )}
                   </div>
-                  <div>
-                    <div className="text-left">
-                      {booking?.status != "booked" && booking?.reqRefund === false && booking?.isRefunded === false && (
-                        <button
-                          className="refundBtn"
-                          onClick={() => {
-                            handleReqRefund(booking._id, booking.roomid);
-                          }}
-                        >
-                          Request Refund
-                        </button>
-                      )}
-                    </div>
-                    <div className="text-left">
-                      {booking?.reqRefund === true && booking?.isRefunded === false && (
-                        <button className="TrefundBtn">
-                          Refund Request has been sent
-                        </button>
-                      )}
-                    </div>
-                    <div className="text-left">
-                      {booking?.isRefunded === true && (
-                        <button className="TrefundBtn">
-                          Refund has been made
-                        </button>
-                      )}
-                    </div>
-                    <div >
-                      {booking?.isRefunded === true && (
-                        <div className="TrefundBtn">Refunded Amount : {(booking?.totalamount) - (booking?.totalamount * 30) / 100}</div>
-                      )}
-                    </div>
+                  <div className="text-left">
+                    {booking?.reqRefund === true && booking?.isRefunded === false && (
+                      <button className="TrefundBtn">
+                        Refund Request has been sent
+                      </button>
+                    )}
+                  </div>
+                  <div className="text-left">
+                    {booking?.isRefunded === true && (
+                      <button className="TrefundBtn">
+                        Refund has been made
+                      </button>
+                    )}
+                  </div>
+                  <div >
+                    {booking?.isRefunded === true && (
+                      <div className="TrefundBtn">Refunded Amount : {(booking?.totalamount) - (booking?.totalamount * 30) / 100}</div>
+                    )}
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
-        </>
+              </div>
+            ))}
+          </div>
+        )}
+
       </div>
     </div>
   );
