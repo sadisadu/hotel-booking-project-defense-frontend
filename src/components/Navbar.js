@@ -8,10 +8,10 @@ function Navbar() {
         window.location.href = '/login'
     }
     return (
-        <div className='w-full h-[70px] bg-black flex justify-between items-center px-3 lg:px-10'>
+        <div className='w-full h-[70px] bg-blue-900 flex justify-between items-center px-5 lg:px-5'>
             <div>
-                <a href='/home' className='text-3xl text-white'>
-                    Booking Hotel
+                <a href='/home' className='text-3xl text-white' >
+               <img src="https://cdn.shopify.com/s/files/1/0558/6413/1764/files/Tulip_Logo_Design_29_1024x1024.png?v=1680795836" alt="Tulip" className='h-6 mr-2'/>Tulip
                 </a>
                 
             </div>

@@ -9,7 +9,6 @@ function AdminFinance() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [hotelName, setHotelName] = useState('');
 
   const adminFinanceRef = useRef();
 
@@ -48,18 +47,18 @@ function AdminFinance() {
   });
 
   const handleFilter = async () => {
-    if (!startDate || !endDate || !hotelName) {
+    if (!startDate || !endDate) {
       Swal.fire({
         title: "ERROR!",
-        text: "Please select both start and end dates, and enter a hotel name",
+        text: "Please select both start and end dates",
         icon: "error",
       });
       return;
     }
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:7700/api/bookings/getBookingsByDateRangeAndHotel", {
-        params: { startDate, endDate, hotelName },
+      const response = await axios.get("http://localhost:7700/api/bookings/getBookingsByDateRange", {
+        params: { startDate, endDate },
       });
       setBookings(response.data);
       calculateTotalAmount(response.data);
@@ -78,40 +77,49 @@ function AdminFinance() {
     <div className="row">
       <div className="col-md-12">
         <h1>Finance Details</h1>
-        <div className="date-filter mb-3">
-          <input
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            className="form-control"
-            placeholder="Start Date"
-          />
-          <input
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            className="form-control mt-2"
-            placeholder="End Date"
-          />
-          <input
-            type="text"
-            value={hotelName}
-            onChange={(e) => setHotelName(e.target.value)}
-            className="form-control mt-2"
-            placeholder="Enter Hotel Name"
-          />
-          <button onClick={handleFilter} className="btn btn-primary mt-2">Filter</button>
-          <button onClick={fetchAllBookings} className="btn btn-secondary mt-2 ml-2">Show All</button>
-        </div>
-        <button onClick={handleGenerateReport} className="btn btn-primary mb-3">Generate Report</button>
+        <form onSubmit={(e) => { e.preventDefault(); handleFilter(); }}>
+          <div className="row">
+            <div className="col-md-4">
+              <label htmlFor="from-date">From date:</label>
+              <input
+                id="from-date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                name="from_date"
+                type="date"
+                className="form-control"
+              />
+            </div>
+            <div className="col-md-4">
+              <label htmlFor="to-date">To date:</label>
+              <input
+                id="to-date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                name="to_date"
+                type="date"
+                className="form-control"
+              />
+            </div>
+            <div className="col-md-4">
+              <button type="submit" className="btn btn-success mt-4">Search</button>
+              <button onClick={fetchAllBookings} className="btn btn-secondary mt-4 ml-2">Show All</button>
+            </div>
+          </div>
+        </form>
+        <button onClick={handleGenerateReport} className="btn btn-primary mb-3 mt-3">Generate Report</button>
         {loading ? (
           <p>Loading...</p>
         ) : (
+          
           <>
+          
+          
+            
+
             <div className="total-amount">
               <h2>Total Amount: BDT {totalAmount}</h2>
             </div>
-            {/* Render bookings table */}
             <div ref={adminFinanceRef}>
               <table className="table table-striped table-border">
                 <thead>
@@ -148,6 +156,8 @@ function AdminFinance() {
 }
 
 export default AdminFinance;
+
+
 
 
 

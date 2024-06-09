@@ -17,7 +17,7 @@ code {
 }
 
 .navbar {
-  background-color: black !important;
+  background-color: rgb(12, 12, 105)k !important;
   z-index: 10;
 }
 
@@ -43,7 +43,7 @@ h1 {
 }
 
 .btn {
-  background-color: black !important;
+  background-color: rgb(21, 71, 206) !important;
   color: white !important;
   box-shadow: none !important;
 }
@@ -69,7 +69,7 @@ h1 {
   padding: 6px 15px;
   font-size: 16px;
   border: 2px solid transparent;
-  background-color: #000000;
+  background-color:rgb(12, 12, 105);
   color: #ffffff;
   border-radius: 10px !important;
   border-color: #ff0000;
@@ -93,7 +93,7 @@ h1 {
   padding: 6px 15px;
   font-size: 16px;
   border: 2px solid transparent;
-  background-color: #000000;
+  background-color: rgb(12, 12, 105);
   color: #ffffff;
   border-radius: 10px !important;
   border-color: #e6e6e6;
@@ -116,7 +116,7 @@ h1 {
 }
 
 .bs {
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(12, 15, 215, 0.35) 0px 5px 15px;
   margin-top: 20px !important;
   border-radius: 5px !important;
   padding: 20px !important;
@@ -132,7 +132,7 @@ h1 {
 input {
   box-shadow: none !important;
   margin-top: 10px !important;
-  border: 1px solid black !important;
+  border: 1px solid rgb(12, 12, 105) !important;
   width: 100% !important;
   border-radius: 3px !important;
   height: 35px !important;
@@ -142,7 +142,7 @@ select {
   padding: 10px;
   box-shadow: none !important;
   margin-top: 10px !important;
-  border: 1px solid black !important;
+  border: 1px solid rgb(12, 12, 105) !important;
   width: 100% !important;
   border-radius: 3px !important;
 }
@@ -159,7 +159,7 @@ p {
 }
 
 .dropdown-toggle {
-  border: 0px solid black !important;
+  border: 0px solid rgb(12, 12, 105) !important;
 }
 
 .ant-picker-input input {
@@ -169,7 +169,7 @@ p {
 }
 
 .landing {
-  background-color: black;
+  background-color: rgb(8, 8, 108);
   height: 100vh;
 }
 
@@ -179,7 +179,7 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: black;
+  background-color: rgb(12, 12, 105);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -189,7 +189,7 @@ p {
   padding: 10px 30px;
   font-size: 16px;
   border: 2px solid transparent;
-  background-color: black;
+  background-color: rgb(12, 12, 105);
   color: #ffffff;
   border-radius: 10px !important;
   border-color: #f3f3f3;
@@ -200,4 +200,9 @@ p {
   color: #000000;
   border-color: #000000;
   background-color: #ffffff;
+}
+
+.fa-star {
+  color: #FFD700;
+
 }

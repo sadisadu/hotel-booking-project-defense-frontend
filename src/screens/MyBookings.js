@@ -114,6 +114,12 @@ function MyBookings({ data }) {
                     <b>Booking ID:</b> {booking?._id}
                   </p>
                   <p>
+                    <b>Room Number:</b> 3256
+                  </p>
+                  <p>
+                    <b>Floor Number :</b> 3 rd
+                  </p>
+                  <p>
                     <b>CheckIn:</b> {booking?.fromdate}
                   </p>
                   <p>

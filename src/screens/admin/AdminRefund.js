@@ -65,6 +65,9 @@ function AdminRefund() {
         {loading ? (
           <p>Loading...</p>
         ) : (
+
+          
+          
           <table className="table table-striped table-border">
             <thead>
               <tr>
@@ -75,6 +78,7 @@ function AdminRefund() {
                 <th>To date</th>
                 <th>Status info</th>
                 <th>Amount</th>
+                <th>Refund</th>
                 {/* <th>Refund</th> */}
               </tr>
             </thead>
@@ -88,6 +92,13 @@ function AdminRefund() {
                   <td>{booking.todate}</td>
                   <td>{booking.status}</td>
                   <td>{booking.totalamount}</td>
+                  <td>
+                          {(booking?.status != "booked") && (
+                            <div className='DcancelBtn'>
+                              {booking?.totalamount - (booking?.totalamount * 30) / 100}
+                            </div>
+                          )}
+                        </td>
                   {/* <td>
                     <button
                       onClick={() => {
