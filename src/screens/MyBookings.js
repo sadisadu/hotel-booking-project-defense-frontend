@@ -153,6 +153,14 @@ function MyBookings({ data }) {
                   <b>Checkout:</b> {booking?.todate}
                 </p>
                 <p>
+                  <b>Floor Number:</b> 3rd
+                </p>
+                <p>
+                  <b>Room Number:</b> 3256
+                </p>
+                 
+
+                <p>
                   <b>Total Amount:</b> {booking?.totalamount}
                 </p>
                 <p>

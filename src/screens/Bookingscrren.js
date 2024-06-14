@@ -144,7 +144,10 @@ async function onToken(token) {
                   <p>Name : {JSON.parse(localStorage.getItem('currentUser'))?.name}</p>
                   <p>From Date : {fromdate}</p>
                   <p>To Date : {todate}</p>
+                  <p>Checkin time: 10 am</p>
+                  <p>CheckOut time: 9 am</p>
                   <p>Room Number : {room?.totalrooms}</p>
+                  
                 </b>
               </div>
               <div style={{ textAlign: 'right' }}>

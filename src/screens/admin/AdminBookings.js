@@ -200,6 +200,8 @@ function AdminBookings() {
                     <th>Status</th>
                     <th>Cancel</th>
                     <th>CheckOut</th>
+                    <th>Checkin time</th>
+                    <th>CheckOut time</th>
                     <th>Refund Amount</th>
                     <th>Refund</th>
                   </tr>
@@ -240,12 +242,14 @@ function AdminBookings() {
                             </button>
                           )}
                         </td>
+                        <td>10 am</td>
+                        <td>9 am</td>
 
                         {/* refund ammount part */}
                         <td>
                           {(booking?.status != "booked" && booking?.status != "checkout") && (
                             <div className='DcancelBtn'>
-                              {booking?.totalamount - (booking?.totalamount * 100) / 100}
+                              {booking?.totalamount - (booking?.totalamount * 30) / 100}
                             </div>
                           )}
                         </td>
