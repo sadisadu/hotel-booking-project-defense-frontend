@@ -10,8 +10,12 @@ import moment from "moment";
 import { message } from 'antd';
 import Swal from 'sweetalert2';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { Rating } from '@smastrom/react-rating'
+
+import '@smastrom/react-rating/style.css'
 
 function Bookingscrren() {
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
   const [room, setRoom] = useState();
@@ -21,6 +25,7 @@ function Bookingscrren() {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviewDescription, setReviewDescription] = useState('');
   const [reviewName, setReviewName] = useState('');
+  const [ratingNum, setRatingNum] = useState(0)
 
   const [adultCount, setAdultCount] = useState(0);
   const [childCount, setChildCount] = useState(0);
@@ -57,7 +62,7 @@ function Bookingscrren() {
   }, [roomid]);
 
   // onToken Function
-async function onToken(token) {
+  async function onToken(token) {
     // console.log(token);
     const bookingDetails = {
       room,
@@ -95,15 +100,18 @@ async function onToken(token) {
   // review ---: 
   const submitReview = async () => {
     const review = {
-      description: reviewDescription,
-      customerName: reviewName || user?.name
+      comment: reviewDescription,
+      customerName: reviewName || user?.name,
+      rating: ratingNum
     };
 
     console.log("review ---:", review, roomid);
 
     try {
       setLoading(true);
+      console.log("i am in try block")
       const response = await axios.post("http://localhost:7700/api/rooms/addreview", { roomid, review });
+      console.log("I am review response ", response.data)
       setRoom(response.data);
       setLoading(false);
       setShowReviewModal(false);
@@ -113,10 +121,11 @@ async function onToken(token) {
         text: "Thank you for your feedback.",
       });
     } catch (error) {
+      console.log("i am in catch block")
       setLoading(false);
       Swal.fire({
         title: "Something went wrong!! Try Again!",
-        text: `Error: ${error.message}`,
+        text: `Error: ${error}`,
         icon: "error",
       });
     }
@@ -135,7 +144,7 @@ async function onToken(token) {
               <h1>{room?.name}</h1>
               <img src={room?.imageurls[0]} className='bigimg' alt={room?.name} />
             </div>
-            
+
             <div className='col-md-6'>
               <div style={{ textAlign: 'right' }}>
                 <h1>Booking Details</h1>
@@ -147,7 +156,7 @@ async function onToken(token) {
                   <p>Checkin time: 10 am</p>
                   <p>CheckOut time: 9 am</p>
                   <p>Room Number : {room?.totalrooms}</p>
-                  
+
                 </b>
               </div>
               <div style={{ textAlign: 'right' }}>
@@ -155,41 +164,41 @@ async function onToken(token) {
                   <h1>Amount</h1>
                   <hr />
                   {/* adding adult childpart */}
-                  {room?.type.toLowerCase() === "double" || room?.type.toLowerCase() ==="delux" && (<div>
+                  {room?.type.toLowerCase() === "double" || room?.type.toLowerCase() === "delux" && (<div>
                     {/* enter adult number */}
-                  <div className='w-full flex flex-col items-end border-b py-3'>
-                    <p>Enter number of Adults: </p>
-                    <p>{adultCount}</p>
-                    <div className='flex gap-1'>
-                      <button onClick={() => {
-                        if (adultCount < 2) {
-                          setAdultCount((prev) => prev + 1)
-                        }
-                      }} className='w-[30px] h-[30px] flex justify-center items-center border border-gray-200 rounded-[6px]'>+</button>
-                      <button onClick={() => {
-                        if (adultCount > 0) {
-                          setAdultCount((prev) => prev - 1)
-                        }
-                      }} className='w-[30px] h-[30px] flex justify-center items-center border border-gray-200 rounded-[6px]'>-</button>
+                    <div className='w-full flex flex-col items-end border-b py-3'>
+                      <p>Enter number of Adults: </p>
+                      <p>{adultCount}</p>
+                      <div className='flex gap-1'>
+                        <button onClick={() => {
+                          if (adultCount < 2) {
+                            setAdultCount((prev) => prev + 1)
+                          }
+                        }} className='w-[30px] h-[30px] flex justify-center items-center border border-gray-200 rounded-[6px]'>+</button>
+                        <button onClick={() => {
+                          if (adultCount > 0) {
+                            setAdultCount((prev) => prev - 1)
+                          }
+                        }} className='w-[30px] h-[30px] flex justify-center items-center border border-gray-200 rounded-[6px]'>-</button>
+                      </div>
                     </div>
-                  </div>
-                  {/* enter child number */}
-                  <div className='w-full flex flex-col items-end border-b py-3'>
-                    <p>Enter number of Child: </p>
-                    <p>{childCount}</p>
-                    <div className='flex gap-1'>
-                      <button onClick={() => {
-                        if (childCount < 2) {
-                          setChildCount((prev) => prev + 1)
-                        }
-                      }} className='w-[30px] h-[30px] flex justify-center items-center border border-gray-200 rounded-[6px]'>+</button>
-                      <button onClick={() => {
-                        if (childCount > 0) {
-                          setChildCount((prev) => prev - 1)
-                        }
-                      }} className='w-[30px] h-[30px] flex justify-center items-center border border-gray-200 rounded-[6px]'>-</button>
+                    {/* enter child number */}
+                    <div className='w-full flex flex-col items-end border-b py-3'>
+                      <p>Enter number of Child: </p>
+                      <p>{childCount}</p>
+                      <div className='flex gap-1'>
+                        <button onClick={() => {
+                          if (childCount < 2) {
+                            setChildCount((prev) => prev + 1)
+                          }
+                        }} className='w-[30px] h-[30px] flex justify-center items-center border border-gray-200 rounded-[6px]'>+</button>
+                        <button onClick={() => {
+                          if (childCount > 0) {
+                            setChildCount((prev) => prev - 1)
+                          }
+                        }} className='w-[30px] h-[30px] flex justify-center items-center border border-gray-200 rounded-[6px]'>-</button>
+                      </div>
                     </div>
-                  </div>
                   </div>)}
                   {/*  */}
                   <p>Total days : {totaldays}</p>
@@ -198,7 +207,7 @@ async function onToken(token) {
                 </b>
               </div>
 
-              <div style={{ float: 'right' }}>
+              <div className='flex flex-col gap-3' style={{ float: 'right' }}>
                 <StripeCheckout
                   name={`Name: ${user?.name}`}
                   shippingAddress={false}
@@ -212,27 +221,39 @@ async function onToken(token) {
                 >
                   <button className="btn btn-primary">Pay Now</button>
                 </StripeCheckout>
-                <div style={{ marginTop: 10, borderRadius: 5, alignItems: 'center', height: 30, width: 90, backgroundColor: 'black', color: 'white', textAlign: 'center' }}>
-                  <button onClick={() => setShowReviewModal(true)}>
-                    Review
-                  </button>
-                </div>
+
+                <button className='px-3 py-2.5 bg-black text-white rounded-lg' onClick={() => setShowReviewModal(true)}>
+                  Review
+                </button>
+
               </div>
             </div>
 
           </div>
-          <div style={{ padding: 20, }}>
+          <div className='py-[20px]'>
             <h3>Reviews</h3>
-            <div>
-
+            <div className="flex flex-col ">
               {room?.reviews?.map((review, index) => (
-                <div key={index} className="review">
-                  <p><b>{review.customerName}</b>: {review.description}</p>
-                  <div style={{ marginBottom: 5 }}></div>
+                <div key={index} className='py-3' >
+                  <div className='flex flex-col'>
+                    <div className='flex gap-2'> 
+                      <span>{review?.customerName}:</span>
+                      <span>{review?.comment}</span>
+                      </div>
+                    <div className=' flex items-center'>
+                      Rating : <Rating
+                        style={{ maxWidth: 100 }}
+                        value={review?.rating}
+                        readOnly
+                      />
+                    </div>
+                  </div>
+
                 </div>
               ))}
 
             </div>
+
           </div>
         </div>
       )}
@@ -242,24 +263,41 @@ async function onToken(token) {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group>
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                value={reviewDescription}
-                onChange={(e) => setReviewDescription(e.target.value)}
+            {/* description */}
+            <div className='pb-3'>
+              <Form.Group>
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  required
+                  rows={3}
+                  value={reviewDescription}
+                  onChange={(e) => setReviewDescription(e.target.value)}
+                />
+              </Form.Group>
+            </div>
+            {/* name */}
+            <div className='pb-3'>
+              <Form.Group>
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  value={reviewName}
+                  onChange={(e) => setReviewName(e.target.value)}
+                  placeholder="Your name"
+                />
+              </Form.Group>
+            </div>
+            {/* rating */}
+            <div>
+              <Rating
+                isRequired
+                style={{ maxWidth: 180 }}
+                value={ratingNum}
+                onChange={setRatingNum}
               />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                value={reviewName}
-                onChange={(e) => setReviewName(e.target.value)}
-                placeholder="Your name"
-              />
-            </Form.Group>
+            </div>
           </Form>
         </Modal.Body>
         <Modal.Footer>

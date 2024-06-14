@@ -5,12 +5,14 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Link, link } from 'react-router-dom'
 import Carousel from 'react-bootstrap/Carousel';
+import { Rating } from '@smastrom/react-rating';
 
 
 
 function Room({ room, fromdate, todate }) {
   // console.log("room", room)
   const [show, setShow] = useState(false);
+
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -29,16 +31,17 @@ function Room({ room, fromdate, todate }) {
           <p>Location : {room?.location}</p>
           <p>Rent Per Day : {room?.rentperday}</p>
           <div>
-          <h4>Rating</h4>
-          <i class="fa-solid fa-star" ></i>
-          <i class="fa-solid fa-star" ></i>
-          <i class="fa-solid fa-star" ></i>
-          <i class="fa-solid fa-star" ></i>
-          <i class="fa-solid fa-star" ></i>
-         </div>
+            <div className=' flex items-center'>
+              Rating : <Rating
+                style={{ maxWidth: 100 }}
+                value={room?.reviews[0]?.rating}
+                readOnly
+              />
+            </div>
+          </div>
         </b>
-       
-       
+
+
         <div style={{ float: "right" }}> {/* Adjust alignment of button */}
 
           {(fromdate && todate) && (
@@ -47,7 +50,7 @@ function Room({ room, fromdate, todate }) {
             </Link>
           )}
 
-          
+
 
           <button className="btn btn-primary" onClick={handleShow}>view details</button>
         </div>
@@ -73,43 +76,44 @@ function Room({ room, fromdate, todate }) {
           </Carousel>
           <p style={{ whiteSpace: 'pre-wrap' }}>{room?.description}</p>
 
-            
-      
+
+
 
           {/* Rating */}
-          <div style={{ padding: 10,   }}>
-          <h4>Rating</h4>
-          <i class="fa-solid fa-star" ></i>
-          <i class="fa-solid fa-star" ></i>
-          <i class="fa-solid fa-star" ></i>
-          <i class="fa-solid fa-star" ></i>
-          <i class="fa-solid fa-star" ></i>
-         </div>
-         
-         {/* Room Details */}
-         <div style={{ padding: 10,   }}>
-          <h4>Room Details</h4>
-          <p>Floor Number: 3rd </p>
+          <div>
+            <div className=' flex items-center'>
+              Rating : <Rating
+                style={{ maxWidth: 100 }}
+                value={room?.reviews[0]?.rating}
+                readOnly
+              />
+            </div>
+          </div>
+
+          {/* Room Details */}
+          <div style={{ padding: 10, }}>
+            <h4>Room Details</h4>
+            <p>Floor Number: 3rd </p>
             <p>Room Number:3256</p>
-         </div> 
+          </div>
 
           {/* Features */}
-          <div style={{ padding: 10,  }}>
-          <h4>Features</h4>
-          <p>1 Bathroom  1 Balcony  2 sofa</p>
-         </div>
+          <div style={{ padding: 10, }}>
+            <h4>Features</h4>
+            <p>1 Bathroom  1 Balcony  2 sofa</p>
+          </div>
 
-            {/* Facility */}
-          <div style={{ padding: 10,  }}>
-          <h4>Facilities</h4>
-          <p>Wifi   Television   Ac</p>
-         </div>
+          {/* Facility */}
+          <div style={{ padding: 10, }}>
+            <h4>Facilities</h4>
+            <p>Wifi   Television   Ac</p>
+          </div>
 
-         {/* Area */}
-         <div style={{ padding: 10,  }}>
-          <h4>Area</h4>
-          <p>200 sq.ft.</p>
-         </div>
+          {/* Area */}
+          <div style={{ padding: 10, }}>
+            <h4>Area</h4>
+            <p>200 sq.ft.</p>
+          </div>
 
           {/* review part  */}
           <div style={{ padding: 10, }}>
