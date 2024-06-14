@@ -11,6 +11,30 @@ import AdminEditBookings from "./AdminEditBookings";
 import { RxCross2 } from "react-icons/rx";
 
 function AdminBookings() {
+  function getFormattedDate(date) {
+    const day = String(date.getDate()).padStart(2, '0'); 
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+  
+    return `${day}-${month}-${year}`;
+  }
+  
+  function compareDates(currentDate, providedDate, totalAmount) {
+    currentDate = getFormattedDate(new Date());
+   // providedDate = getFormattedDate(new Date(providedDate));
+  
+    if (currentDate == providedDate) {
+      totalAmount = totalAmount/2;
+      console.log("Current date is equal to provided date", currentDate);
+    } else if (currentDate > providedDate) {
+      totalAmount = 0
+      console.log("Current date is after provided date");
+    } else {
+      totalAmount = totalAmount;
+      console.log("Current date is before to provided date", providedDate);
+    }
+    return totalAmount;
+  }
   const [loading, setLoading] = useState(true);
   const [bookings, setBookings] = useState([]);
   const [editPopup, setEditPopup] = useState(false);
@@ -43,10 +67,11 @@ function AdminBookings() {
     fetchAdminBookings();
   }, []);
 
-  const handleCancel = (id, roomid) => {
+  const handleCancel = (id, roomid, fromdate, totalAmount) => {
     const bookingid = id;
     // console.log("I am bookingid", bookingid)
     // console.log("I am roomid", roomid)
+    const refundAmount = compareDates(new Date(), fromdate,totalAmount);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -62,6 +87,10 @@ function AdminBookings() {
             await axios.post(
               "http://localhost:7700/api/bookings/admin/cancelBooking",
               { bookingid, roomid }
+            );
+            await axios.post(
+              "http://localhost:7700/api/bookings/refundBooking",
+              { bookingid, roomid, refundAmount }
             );
             Swal.fire({
               title: "Booking Cancelled !!!",
@@ -221,7 +250,7 @@ function AdminBookings() {
                           {booking?.status === "booked" && (
                             <button
                               onClick={() => {
-                                handleCancel(booking?._id, booking?.roomid);
+                                handleCancel(booking?._id, booking?.roomid, booking.fromdate, booking.totalamount);
                               }}
                               className="w-[35px h-[35px] px-2 rounded-full border flex justify-center  items-center bg-red-600  hover:bg-red-700 text-white  duration-300"
                             >

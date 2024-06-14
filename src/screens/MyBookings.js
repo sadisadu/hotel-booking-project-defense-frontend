@@ -252,7 +252,7 @@ function MyBookings({ data }) {
                   <div className="text-left">
                     {booking?.reqRefund === true && booking?.isRefunded === false && (
                       <button className="TrefundBtn">
-                        Refund Request has been sent
+                        Refund is Processing ...
                       </button>
                     )}
                   </div>
