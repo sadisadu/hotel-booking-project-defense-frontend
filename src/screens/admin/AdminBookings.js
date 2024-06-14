@@ -296,7 +296,7 @@ function AdminBookings() {
                               </button>
                             </div>
                           )}
-                          {booking?.isRefunded === true && (
+                          {booking?.isRefunded === true && booking?.refundAmount != 0 && (
                             <div>
                               <button
                                 className="TrefundBtn"
