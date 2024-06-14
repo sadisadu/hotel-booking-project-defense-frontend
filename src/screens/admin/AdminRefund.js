@@ -1,3 +1,5 @@
+// admin refund
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -95,7 +97,7 @@ function AdminRefund() {
                   <td>
                           {(booking?.status != "booked") && (
                             <div className='DcancelBtn'>
-                              {booking?.totalamount - (booking?.totalamount * 30) / 100}
+                              {booking?.refundAmount}
                             </div>
                           )}
                         </td>

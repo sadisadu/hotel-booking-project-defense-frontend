@@ -249,7 +249,7 @@ function AdminBookings() {
                         <td>
                           {(booking?.status != "booked" && booking?.status != "checkout") && (
                             <div className='DcancelBtn'>
-                              {booking?.totalamount - (booking?.totalamount * 30) / 100}
+                              {booking?.refundAmount}
                             </div>
                           )}
                         </td>

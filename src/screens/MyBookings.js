@@ -1,9 +1,36 @@
+// my booking
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import Loader from '../components/Loader'
 import { Tag, Divider } from 'antd'
 function MyBookings({ data }) {
+
+  function getFormattedDate(date) {
+    const day = String(date.getDate()).padStart(2, '0'); 
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+  
+    return `${day}-${month}-${year}`;
+  }
+  
+  function compareDates(currentDate, providedDate, totalAmount) {
+    currentDate = getFormattedDate(new Date());
+   // providedDate = getFormattedDate(new Date(providedDate));
+  
+    if (currentDate == providedDate) {
+      totalAmount = totalAmount/2;
+      console.log("Current date is equal to provided date", currentDate);
+    } else if (currentDate > providedDate) {
+      totalAmount = 0
+      console.log("Current date is after provided date");
+    } else {
+      totalAmount = totalAmount;
+      console.log("Current date is before to provided date", providedDate);
+    }
+    return totalAmount;
+  }
+
 
   const userid = data._id
 
@@ -96,7 +123,13 @@ function MyBookings({ data }) {
   }
 
   // handle refund
-  const handleReqRefund = (bookingid, roomid) => {
+  const handleReqRefund = (bookingid, roomid, fromdate, totalamount) => {
+    
+    console.log("Hits refund handler");
+    const refundAmount = compareDates(new Date(), fromdate,totalamount );
+    
+
+    console.log("Hits refund handler amount",refundAmount );
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -111,7 +144,7 @@ function MyBookings({ data }) {
           try {
             await axios.post(
               "http://localhost:7700/api/bookings/refundBooking",
-              { bookingid, roomid }
+              { bookingid, roomid, refundAmount }
             );
             Swal.fire({
               title: "Requested!",
@@ -209,7 +242,7 @@ function MyBookings({ data }) {
                       <button
                         className="refundBtn"
                         onClick={() => {
-                          handleReqRefund(booking._id, booking.roomid);
+                          handleReqRefund(booking._id, booking.roomid,booking.fromdate, booking.totalamount);
                         }}
                       >
                         Request Refund
@@ -232,7 +265,7 @@ function MyBookings({ data }) {
                   </div>
                   <div >
                     {booking?.isRefunded === true && (
-                      <div className="TrefundBtn">Refunded Amount : {(booking?.totalamount) - (booking?.totalamount * 30) / 100}</div>
+                      <div className="TrefundBtn">Refunded Amount : {booking?.refundAmount}</div>
                     )}
                   </div>
                 </div>
