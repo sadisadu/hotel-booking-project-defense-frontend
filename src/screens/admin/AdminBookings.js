@@ -12,19 +12,19 @@ import { RxCross2 } from "react-icons/rx";
 
 function AdminBookings() {
   function getFormattedDate(date) {
-    const day = String(date.getDate()).padStart(2, '0'); 
+    const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = date.getFullYear();
-  
+
     return `${day}-${month}-${year}`;
   }
-  
+
   function compareDates(currentDate, providedDate, totalAmount) {
     currentDate = getFormattedDate(new Date());
-   // providedDate = getFormattedDate(new Date(providedDate));
-  
+    // providedDate = getFormattedDate(new Date(providedDate));
+
     if (currentDate == providedDate) {
-      totalAmount = totalAmount/2;
+      totalAmount = totalAmount / 2;
       console.log("Current date is equal to provided date", currentDate);
     } else if (currentDate > providedDate) {
       totalAmount = 0
@@ -71,7 +71,7 @@ function AdminBookings() {
     const bookingid = id;
     // console.log("I am bookingid", bookingid)
     // console.log("I am roomid", roomid)
-    const refundAmount = compareDates(new Date(), fromdate,totalAmount);
+    const refundAmount = compareDates(new Date(), fromdate, totalAmount);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",

@@ -280,4 +280,3 @@ function MyBookings({ data }) {
 }
 
 export default MyBookings;
-

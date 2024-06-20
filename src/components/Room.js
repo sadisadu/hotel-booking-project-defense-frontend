@@ -17,6 +17,15 @@ function Room({ room, fromdate, todate }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // calculating rating average
+  const ratingSum = room?.reviews?.reduce((acc, review) => {
+    return acc + review?.rating
+  }, 0)
+  // console.log("ratiing sum ", ratingSum)
+  const ratingAvg = (ratingSum / room?.reviews.length)
+  console.log(`average rating for ${room.name} iis ${ratingAvg} the length is ${room.reviews.length}`)
+
+
   return (
     <div className="row bs">
       <div className="col-md-4">
@@ -31,13 +40,19 @@ function Room({ room, fromdate, todate }) {
           <p>Location : {room?.location}</p>
           <p>Rent Per Day : {room?.rentperday}</p>
           <div>
-            <div className=' flex items-center'>
+            {room?.reviews.length > 0 ? (<div className=' flex items-center'>
               Rating : <Rating
                 style={{ maxWidth: 100 }}
-                value={room?.reviews[0]?.rating}
+                value={ratingAvg}
                 readOnly
               />
-            </div>
+            </div>) : (<div className=' flex items-center'>
+              Rating : <Rating
+                style={{ maxWidth: 100 }}
+                value={0}
+                readOnly
+              />
+            </div>)}
           </div>
         </b>
 
@@ -84,7 +99,7 @@ function Room({ room, fromdate, todate }) {
             <div className=' flex items-center'>
               Rating : <Rating
                 style={{ maxWidth: 100 }}
-                value={room?.reviews[0]?.rating}
+                value={(ratingAvg)}
                 readOnly
               />
             </div>
@@ -121,9 +136,20 @@ function Room({ room, fromdate, todate }) {
             <div>
 
               {room?.reviews?.map((review, index) => (
-                <div key={index} className="review">
-                  <p><b>{review.customerName}</b>: {review.description}</p>
-                  <div style={{ marginBottom: 5 }}></div>
+                <div key={index} className="review py-2">
+                  <span><b>{review.customerName}</b>: {review.comment}</span>
+                  <div style={{ marginBottom: 5 }}>
+                    {/* Rating */}
+                    <div>
+                      <div className=' flex items-center'>
+                        Rating : <Rating
+                          style={{ maxWidth: 100 }}
+                          value={review?.rating}
+                          readOnly
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))}
 
