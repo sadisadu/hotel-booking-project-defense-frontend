@@ -48,10 +48,10 @@ function Homescreen() {
     const fetchNotification = async () => {
       try {
         setloading(true)
-        const response = await axios.get(`http://localhost:7700/api/bookings/notifications/${user?._id}`)
+        const response = await axios.get(`http://localhost:7700/api/bookings/notifications`)
         console.log("i am notification", response.data)
         // setNotification(response.data);
-        if (response.data) {
+        if (response.data.filter((notification)=> notification?.userid === user?._id)) {
           toast.info("You have a notification !!! Check in your Profile !!!", {
             position: "top-right",
             autoClose: false,

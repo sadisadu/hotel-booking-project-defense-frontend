@@ -230,6 +230,7 @@ function AdminBookings() {
               <table className=" table table-striped table-border ">
                 <thead className="">
                   <tr>
+                  <th>Sl</th>
                     <th>Booking ID</th>
                     <th>User ID</th>
                     <th>User</th>
@@ -251,6 +252,7 @@ function AdminBookings() {
                   {bookings.length > 0 &&
                     [...bookings].reverse().map((booking, index) => (
                       <tr key={index}>
+                        <td>{index + 1}</td>
                         <td>{booking?._id}</td>
                         <td>{booking?.userid}</td>
                         <td>{booking?.username}</td>
