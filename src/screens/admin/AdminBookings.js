@@ -35,6 +35,16 @@ function AdminBookings() {
     }
     return totalAmount;
   }
+
+  // formating date
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; 
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+
   const [loading, setLoading] = useState(true);
   const [bookings, setBookings] = useState([]);
   const [editPopup, setEditPopup] = useState(false);
@@ -222,6 +232,7 @@ function AdminBookings() {
                   <tr>
                     <th>Booking ID</th>
                     <th>User ID</th>
+                    <th>User</th>
                     <th>Room</th>
                     <th>Amount</th>
                     <th>From</th>
@@ -231,6 +242,7 @@ function AdminBookings() {
                     <th>CheckOut</th>
                     <th>Checkin time</th>
                     <th>CheckOut time</th>
+                    <th>Cancel Date</th>
                     <th>Refund Amount</th>
                     <th>Refund</th>
                   </tr>
@@ -241,6 +253,7 @@ function AdminBookings() {
                       <tr key={index}>
                         <td>{booking?._id}</td>
                         <td>{booking?.userid}</td>
+                        <td>{booking?.username}</td>
                         <td>{booking?.room}</td>
                         <td>{booking?.totalamount}</td>
                         <td>{booking?.fromdate}</td>
@@ -271,6 +284,7 @@ function AdminBookings() {
                             </button>
                           )}
                         </td>
+                        <td>{formatDate(booking?.cancelDate)}</td>
                         <td>10 am</td>
                         <td>9 am</td>
 
