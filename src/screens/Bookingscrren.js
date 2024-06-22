@@ -32,7 +32,7 @@ function Bookingscrren() {
 
   const Fromdate = moment(fromdate, 'DD-MM-YYYY');
   const Todate = moment(todate, 'DD-MM-YYYY');
-  const totaldays = moment.duration(Todate.diff(Fromdate)).asDays() ;
+  const totaldays = moment.duration(Todate.diff(Fromdate)).asDays();
   const totalamount = totaldays * room?.rentperday;
 
   const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -89,8 +89,8 @@ function Bookingscrren() {
     } catch (error) {
       setLoading(false)
       Swal.fire({
-        title: "Something went wrong!! Try Again !",
-        text: `Error from bookingScrrens ${error}`,
+        title: `${error.message} !!!`,
+        text: `Error from bookingScrrens ${error.message}`,
         icon: "error",
       });
     }
@@ -129,7 +129,6 @@ function Bookingscrren() {
         text: "Thank you for your feedback.",
       });
     } catch (error) {
-      console.log("i am in catch block")
       setLoading(false);
       Swal.fire({
         title: "Something went wrong!! Try Again!",
@@ -163,7 +162,7 @@ function Bookingscrren() {
                   <p>To Date : {todate}</p>
                   <p>Checkin time: 10 am</p>
                   <p>CheckOut time: 9 am</p>
-                  <p>Room Number : {room?.totalrooms}</p>
+                  <p>Room Available : {room?.totalrooms}</p>
 
                 </b>
               </div>

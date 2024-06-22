@@ -23,7 +23,7 @@ function Room({ room, fromdate, todate }) {
   }, 0)
   // console.log("ratiing sum ", ratingSum)
   const ratingAvg = (ratingSum / room?.reviews.length)
-  console.log(`average rating for ${room.name} iis ${ratingAvg} the length is ${room.reviews.length}`)
+  // console.log(`average rating for ${room.name} iis ${ratingAvg} the length is ${room.reviews.length}`)
 
 
   return (
@@ -34,7 +34,7 @@ function Room({ room, fromdate, todate }) {
       <div className="col-md-8">
         <h1>{room.name}</h1>
         <b>
-          <p>Room Number : {room?.totalrooms}</p>
+          <p>Room Available : {room?.totalrooms}</p>
           <p>Phone Number : {room?.phonenumber}</p>
           <p>Type : {room?.type}</p>
           <p>Location : {room?.location}</p>

@@ -40,7 +40,7 @@ function AdminBookings() {
   function formatDate(dateString) {
     const date = new Date(dateString);
     const day = date.getDate();
-    const month = date.getMonth() + 1; 
+    const month = date.getMonth() + 1;
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   }
@@ -230,7 +230,7 @@ function AdminBookings() {
               <table className=" table table-striped table-border ">
                 <thead className="">
                   <tr>
-                  <th>Sl</th>
+                    <th>Sl</th>
                     <th>Booking ID</th>
                     <th>User ID</th>
                     <th>User</th>
@@ -286,9 +286,9 @@ function AdminBookings() {
                             </button>
                           )}
                         </td>
-                        <td>{formatDate(booking?.cancelDate)}</td>
                         <td>10 am</td>
                         <td>9 am</td>
+                        {booking?.cancelDate && (<td>{formatDate(booking?.cancelDate)}</td>)}
 
                         {/* refund ammount part */}
                         <td>

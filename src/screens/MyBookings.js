@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 import Loader from '../components/Loader'
 import { Tag, Divider } from 'antd'
+
 function MyBookings({ data }) {
 
   function getFormattedDate(date) {

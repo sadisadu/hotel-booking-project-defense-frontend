@@ -18,24 +18,27 @@ function Homescreen() {
   const [todate, settodate] = useState();
   const [duplicaterooms, setduplicaterooms] = useState([])
   const [searchKey, setSearchKey] = useState("")
-  const [searchType, setSearchType] = useState("all")
+  const [roomType, setRoomType] = useState("all")
   const [locationType, setLocationType] = useState("all")
 
   const allRoomTypes = [...new Set(duplicaterooms?.map((item) => item?.type))] //filtering out the duplicate room types
   const allRoomLocation = [...new Set(duplicaterooms?.map((item) => item?.location))] //filtering out the duplicate room location
 
-
+  console.log("room type", roomType)
+  console.log("location type", locationType)
 
 
   useEffect(() => {
+    console.log("use effect called")
     const user = JSON.parse(localStorage.getItem('currentUser'));
     const fetchData = async () => {
       try {
         setloading(true)
         const response = await axios.get("http://localhost:7700/api/rooms/getallrooms")
-        console.log("i am response", response.data)
-        setrooms(response.data)
-        setduplicaterooms(response.data)
+        const filterRoom = response.data.filter((room) => room.totalrooms > 0)
+        // console.log("i am response", filterRoom)
+        setrooms(filterRoom)
+        setduplicaterooms(filterRoom)
         setloading(false)
 
       } catch (error) {
@@ -49,9 +52,9 @@ function Homescreen() {
       try {
         setloading(true)
         const response = await axios.get(`http://localhost:7700/api/bookings/notifications`)
-        console.log("i am notification", response.data)
+        // console.log("i am notification", response.data)
         // setNotification(response.data);
-        if (response.data.filter((notification)=> notification?.userid === user?._id)) {
+        if (response.data.filter((notification) => notification?.userid === user?._id)) {
           toast.info("You have a notification !!! Check in your Profile !!!", {
             position: "top-right",
             autoClose: false,
@@ -83,7 +86,7 @@ function Homescreen() {
     settodate((dates[1]).format('DD-MM-YYYY'))
     let temprooms = []
     let availability = false
-    for (const room of duplicaterooms) {
+    for (const room of rooms) {
       if (room.currentbookings.length > 0) {
 
         for (const booking of room.currentbookings) {
@@ -113,8 +116,11 @@ function Homescreen() {
 
   function filterBySearch() {
     const tempRooms = duplicaterooms.filter(room => {
-      if (searchKey.trim().toLowerCase()) {
+      if (searchKey.trim().toLowerCase() !== "") {
         return room?.name.toLowerCase().includes(searchKey.toLowerCase())
+      }
+      else {
+        return room
       }
     })
     setrooms(tempRooms)
@@ -123,15 +129,19 @@ function Homescreen() {
   function filterByLocation(e) {
     const value = e.target.value
 
-    console.log("location", value)
     setLocationType(value)
+    console.log("location", value)
+    console.log("roomType", roomType)
+
+
+
     if (value !== "all") {
       const tempRooms = [...duplicaterooms]?.filter(room => room?.location.toLowerCase() === value?.toLowerCase())
-      console.log("location", tempRooms)
+      // console.log("location", tempRooms)
       setrooms([...tempRooms])
     }
     else {
-      const tempRooms = [...duplicaterooms]
+      const tempRooms = [...duplicaterooms]?.filter(room => room?.type.toLowerCase() === roomType.toLowerCase())
       setrooms(tempRooms)
     }
   }
@@ -139,14 +149,16 @@ function Homescreen() {
   function filterByOption(e) {
     const value = e.target.value
 
-    console.log("searchtype", value)
-    setSearchType(value)
+    setRoomType(value)
+    console.log("locationType", locationType)
+    console.log("roomtype", value)
+
     if (value !== "all") {
       const tempRooms = [...duplicaterooms].filter(room => room?.type.toLowerCase() === value?.toLowerCase())
       setrooms(tempRooms)
     }
     else {
-      const tempRooms = [...duplicaterooms]
+      const tempRooms = [...duplicaterooms]?.filter(room => room?.location.toLowerCase() === locationType.toLowerCase())
       setrooms(tempRooms)
     }
   }
@@ -192,7 +204,7 @@ function Homescreen() {
         </div>
         {/* filtering by room type */}
         <div className='col-md-3'>
-          <select value={searchType} onChange={
+          <select value={roomType} onChange={
             filterByOption
           }>
             <option value="all">all</option>
@@ -210,7 +222,7 @@ function Homescreen() {
         {loading ? (
           <h1>Loading...</h1>
         ) :
-          searchType === "all" || locationType === "all" ? ((
+          roomType === "all" || locationType === "all" ? ((
             rooms.map((room) => {
               return <div className="col-md-9 mb-10">
                 <Room room={room} fromdate={fromdate} todate={todate} />
@@ -218,7 +230,7 @@ function Homescreen() {
             })
           )) : ((
             rooms.filter((room) => {
-              return room?.type === searchType && room?.location === locationType
+              return (room?.type === roomType && room?.location === locationType)
             }).map((room) => {
               return <div className="col-md-9 mb-10">
                 <Room room={room} fromdate={fromdate} todate={todate} />
