@@ -115,15 +115,14 @@ function Homescreen() {
 
 
   function filterBySearch() {
-    const tempRooms = duplicaterooms.filter(room => {
-      if (searchKey.trim().toLowerCase() !== "") {
-        return room?.name.toLowerCase().includes(searchKey.toLowerCase())
-      }
-      else {
-        return room
-      }
-    })
-    setrooms(tempRooms)
+    if (searchKey.trim().toLowerCase() !== "") {
+      const tempRooms = duplicaterooms.filter(room => room.location.toLowerCase() === locationType.toLowerCase() && room?.name.toLowerCase().includes(searchKey.toLowerCase()))
+      setrooms(tempRooms)
+    }
+    else {
+      const tempRooms = [...duplicaterooms].filter(room => room.location.toLowerCase() === locationType.toLowerCase())
+      setrooms(tempRooms)
+    }
   }
 
   function filterByLocation(e) {
